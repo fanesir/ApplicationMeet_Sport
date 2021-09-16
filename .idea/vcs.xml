@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/CNN_X-ray" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/COVIDNET/COVIDNet-CT" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Covid-19_Android_App" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Covid-19_Android_App/Covid_Identify-Android" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/MyFlowerTraining" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Python_Leantype/Lean_Type" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/java" vcs="Git" />
+  </component>
+</project>

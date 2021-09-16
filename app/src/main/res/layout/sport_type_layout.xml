@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10sp"
+    android:layout_marginTop="10sp"
+    android:layout_marginBottom="10sp"
+    android:scrollbars="vertical"
+    app:cardBackgroundColor="#F4F0F0"
+    app:cardCornerRadius="20sp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/maincardview"
+        android:layout_width="match_parent"
+        android:layout_height="170sp">
+
+        <ImageView
+            android:id="@+id/sportbackgroundImageView"
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@color/teal_200" />
+
+
+        <TextView
+            android:id="@+id/sportname"
+            android:layout_width="135sp"
+            android:layout_height="0sp"
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="68sp"
+            android:gravity="center_horizontal|left"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
