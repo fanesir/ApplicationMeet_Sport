@@ -3,11 +3,21 @@ package com.example.myapplication_MeetSport;
 import java.io.Serializable;
 
 public class DataModal implements Serializable {
-    String sportName, sportBackImage;
+    String sportName;
+    String sportBackImage;
+    String sportEngName;
+
     DataModal() {
 
     }
 
+    public String getSportEngName() {
+        return sportEngName;
+    }
+
+    public void setSportEngName(String sportEngName) {
+        this.sportEngName = sportEngName;
+    }
 
     public String getSportBackImage() {
         return sportBackImage;

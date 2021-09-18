@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
 
             USER_ID = user.getEmail().substring(0, 5) + "";
-            Intent intent = new Intent(getApplicationContext(), SportTypeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SportTypeRecyclerviewActivity.class);
             startActivity(intent);
             finish();
         }
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            Intent intent = new Intent(getApplicationContext(),SportTypeActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), SportTypeRecyclerviewActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
