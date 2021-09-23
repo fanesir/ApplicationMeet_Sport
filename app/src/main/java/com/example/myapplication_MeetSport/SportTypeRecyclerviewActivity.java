@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SportTypeRecyclerviewActivity extends AppCompatActivity {
 
@@ -82,10 +88,15 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             return false;
         });
         authority();
-
-
+        Date date = new Date();
+        try {
+            date =new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i("DATE", String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1 ));
     }
-
+//
 
     public class AdapterForMaimActivity extends FirebaseRecyclerAdapter
             <DataModal, AdapterForMaimActivity.sportTypeRecyclerViewViewholder> {

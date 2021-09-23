@@ -6,11 +6,16 @@ import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -18,36 +23,78 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+
 public class AddAndEditSportActivity extends AppCompatActivity {
 
-    TimePickerDialog timePickerDialog;
+
     Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_and_edit_sport);
-        long twoYears = 1L * 365 * 1000 * 60 * 60 * 24L;
+
 
         EditText topiceditText = findViewById(R.id.editTextsetSportTitle);
         String sportType = SportTypeRecyclerviewActivity.SportTypedataModal.sportName;
         TextView sportNametextView = findViewById(R.id.sportNametextView);
-        Button editTimebutton = findViewById(R.id.editTimebutton);
 
         sportNametextView.setText(sportType);
-        topiceditText.setHint("下班一起來打" + sportType + "吧!");
+        topiceditText.setHint("冰友啊有閒來打" + sportType + "喔!");
 
 
-        editTimebutton.setOnClickListener(view -> timePickerDialog.show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
+        CardView setCardViewInfo = findViewById(R.id.setcardViewinfo);
+        TextView cardCardViewInfoTitle = findViewById(R.id.cardViewinfoTitle);
+        TextView howManyPeopleTextView = findViewById(R.id.cardViewinfopeople);
+        TextView aboutActivityMoney = findViewById(R.id.cardViewinfopay);
+        howManyPeopleTextView.setVisibility(View.GONE);
+        aboutActivityMoney.setVisibility(View.GONE);
 
-        timePickerDialog = new TimePickerDialog.Builder()
-                .setType(Type.ALL)
-                .setTitleStringId("選擇開始時間")
-                .setThemeColor(getResources().getColor(android.R.color.holo_blue_dark))
-                .setMinMillseconds(setDataWanttheTime(Calendar.getInstance().get(Calendar.YEAR) + "-01-01 00:00:00").getTime())//setWanttheTime
-                .setMaxMillseconds(setDataWanttheTime(Calendar.getInstance().get(Calendar.YEAR)+1 + "-12-31 00:00:00").getTime())
-                .setCallBack((timePickerView, millseconds) -> editTimebutton.setText(getDateToString(millseconds)))
-                .build();
+
+        CardView setBookingCardView = findViewById(R.id.cardViewforSetTime);
+        TextView cardViewTextTitle = findViewById(R.id.cardViewTimeTitle);
+        TextView cardViewShowStartTime = findViewById(R.id.timestarttextView);
+        TextView cardViewShowEndTime = findViewById(R.id.timeendtextView);
+        cardViewShowStartTime.setVisibility(View.GONE);
+        cardViewShowEndTime.setVisibility(View.GONE);
+
+        setBookingCardView.setOnClickListener(view -> {
+            Dialog dialog = new Dialog(AddAndEditSportActivity.this);
+            dialog.setContentView(R.layout.show_settime_layout);
+            dialog.setTitle("選擇預約時段");
+            Button editStartTimebutton = dialog.findViewById(R.id.editTimebutton);//editEndTimebutton
+            Button editEndTimebutton = dialog.findViewById(R.id.editEndTimebutton);
+            Button okButton = dialog.findViewById(R.id.okbutton);
+
+            editStartTimebutton.setOnClickListener(view1 -> AddAndEditSportActivity.this.timePickerDialog(editStartTimebutton, "選擇開始時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
+            editEndTimebutton.setOnClickListener(view1 -> timePickerDialog(editEndTimebutton, "選擇結束時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
+            okButton.setOnClickListener(view12 -> {
+                cardViewTextTitle.setVisibility(View.GONE);
+
+                cardViewShowStartTime.setVisibility(View.VISIBLE);
+                cardViewShowStartTime.setText(editStartTimebutton.getText() + "");
+                cardViewShowEndTime.setVisibility(View.VISIBLE);
+                cardViewShowEndTime.setText(editEndTimebutton.getText() + "");
+
+
+                dialog.dismiss();
+            });
+
+
+            dialog.show();
+
+        });
+
+        CardView setLocationCardView = findViewById(R.id.cardViewLocation);
+        TextView cardViewLocationTextTitle = findViewById(R.id.cardViewLocationTitle);
+        TextView LocationName = findViewById(R.id.LocationName);
+        LocationName.setVisibility(View.GONE);
+
+
+
+
 
 
     }
@@ -58,19 +105,39 @@ public class AddAndEditSportActivity extends AppCompatActivity {
 
     }
 
-    public Date setDataWanttheTime(String setTime) {
+    TimePickerDialog timePickerDialog(Button button, String Message) {
+        TimePickerDialog timePickerDialog = new TimePickerDialog.Builder()
+                .setType(Type.ALL)
+                .setTitleStringId(Message)
+                .setThemeColor(getResources().getColor(android.R.color.holo_blue_dark))//
+                .setMinMillseconds(setDataWanttheTime(Calendar.getInstance().get(Calendar.YEAR) + "-" + new String(Calendar.getInstance().get(Calendar.MONTH) + 1 + "") + "-" + Calendar.getInstance().get(Calendar.DATE) + " 00:00:00").getTime())
+                .setMaxMillseconds(setDataWanttheTime(Calendar.getInstance().get(Calendar.YEAR) + 1 + "-12-31 00:00:00").getTime())
+                .setCallBack((timePickerView, millseconds) -> {
+                    getLongTime(millseconds);
+                    button.setText(getDateToString(millseconds));
+                })
+                .build();
+        return timePickerDialog;
+    }
+
+    Long getLongTime(long millseconds) {
+        return millseconds;
+    }
+
+
+    Date setDataWanttheTime(String setTime) {
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(setTime);//
+            date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(setTime);//setTime 可以設置2021-09-23 00:00:00
+            //date.getTime()
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return date;
     }
 
-    public String getDateToString(long time) {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public String getDateToString(long time) {//顯示的時間
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date d = new Date(time);
-        Log.i("date", new Date() + "");
         return sf.format(d);//.substring(0, 10)
 
     }
