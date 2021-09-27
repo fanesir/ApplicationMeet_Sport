@@ -30,6 +30,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
 
 
     Date date;
+    int index = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,31 +53,74 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         howManyPeopleTextView.setVisibility(View.GONE);
         aboutActivityMoney.setVisibility(View.GONE);
 
+        setCardViewInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        CardView setBookingCardView = findViewById(R.id.cardViewforSetTime);
+                String[] setPayWay = {"各出各的", "主辦方支付", "免費"};
+
+                Dialog dialog = new Dialog(AddAndEditSportActivity.this);
+                dialog.setContentView(R.layout.show_info_layout);
+                TextView showPayWay = dialog.findViewById(R.id.textViewPayWay);
+                EditText gteHowManyPeople = dialog.findViewById(R.id.editTextNumber);
+
+                Button nextButton = dialog.findViewById(R.id.nextbutton);
+                nextButton.setOnClickListener(view13 -> {
+                    if (index < setPayWay.length - 1) {
+                        index = index + 1;
+                        showPayWay.setText(setPayWay[index]);
+                    }
+                });
+
+                Button backButton = dialog.findViewById(R.id.backbutton);
+                backButton.setOnClickListener(view14 -> {
+                    if (index > 0) {
+                        index = index - 1;
+                        showPayWay.setText(setPayWay[index]);
+
+                    }
+                });
+
+                Button okButton = dialog.findViewById(R.id.okbutton);
+                okButton.setOnClickListener(view15 -> {
+                    cardCardViewInfoTitle.setVisibility(View.GONE);
+                    howManyPeopleTextView.setVisibility(View.VISIBLE);
+                    aboutActivityMoney.setVisibility(View.VISIBLE);
+
+                    howManyPeopleTextView.setText("出席約:" + gteHowManyPeople.getText() + "人");
+                    aboutActivityMoney.setText("費用方式:" + showPayWay.getText() + "");
+                    dialog.dismiss();
+                });
+
+                dialog.show();
+            }
+        });
+
+
+        CardView setTimeCardView = findViewById(R.id.cardViewforSetTime);
         TextView cardViewTextTitle = findViewById(R.id.cardViewTimeTitle);
         TextView cardViewShowStartTime = findViewById(R.id.timestarttextView);
         TextView cardViewShowEndTime = findViewById(R.id.timeendtextView);
         cardViewShowStartTime.setVisibility(View.GONE);
         cardViewShowEndTime.setVisibility(View.GONE);
 
-        setBookingCardView.setOnClickListener(view -> {
+        setTimeCardView.setOnClickListener(view -> {
             Dialog dialog = new Dialog(AddAndEditSportActivity.this);
             dialog.setContentView(R.layout.show_settime_layout);
-            dialog.setTitle("選擇預約時段");
+
             Button editStartTimebutton = dialog.findViewById(R.id.editTimebutton);//editEndTimebutton
             Button editEndTimebutton = dialog.findViewById(R.id.editEndTimebutton);
             Button okButton = dialog.findViewById(R.id.okbutton);
 
             editStartTimebutton.setOnClickListener(view1 -> AddAndEditSportActivity.this.timePickerDialog(editStartTimebutton, "選擇開始時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
-            editEndTimebutton.setOnClickListener(view1 -> timePickerDialog(editEndTimebutton, "選擇結束時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
+            editEndTimebutton.setOnClickListener(view1 -> AddAndEditSportActivity.this.timePickerDialog(editEndTimebutton, "選擇結束時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
             okButton.setOnClickListener(view12 -> {
                 cardViewTextTitle.setVisibility(View.GONE);
 
                 cardViewShowStartTime.setVisibility(View.VISIBLE);
-                cardViewShowStartTime.setText(editStartTimebutton.getText() + "");
+                cardViewShowStartTime.setText("開始:" + editStartTimebutton.getText() + "");
                 cardViewShowEndTime.setVisibility(View.VISIBLE);
-                cardViewShowEndTime.setText(editEndTimebutton.getText() + "");
+                cardViewShowEndTime.setText("結束:" + editEndTimebutton.getText() + "");
 
 
                 dialog.dismiss();
@@ -92,9 +136,12 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         TextView LocationName = findViewById(R.id.LocationName);
         LocationName.setVisibility(View.GONE);
 
-
-
-
+        setLocationCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddAndEditSportActivity.this,GoogleMapSystemMainActivity.class));
+            }
+        });
 
 
     }
