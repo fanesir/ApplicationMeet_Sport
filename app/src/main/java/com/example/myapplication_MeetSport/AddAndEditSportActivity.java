@@ -29,6 +29,7 @@ import androidx.cardview.widget.CardView;
 
 public class AddAndEditSportActivity extends AppCompatActivity {
 
+    addAboutInfoSportDataSet addAboutInfoSportDataSet = new addAboutInfoSportDataSet() ;
 
     Date date;
     int index = -1;
@@ -63,7 +64,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             Dialog dialog = new Dialog(AddAndEditSportActivity.this);
             dialog.setContentView(R.layout.show_info_layout);
             TextView showPayWay = dialog.findViewById(R.id.textViewPayWay);
-            EditText gteHowManyPeople = dialog.findViewById(R.id.editTextNumber);
+            EditText gteEditHowManyPeople = dialog.findViewById(R.id.editTextNumber);
 
             Button nextButton = dialog.findViewById(R.id.nextbutton);
             nextButton.setOnClickListener(view13 -> {
@@ -88,13 +89,13 @@ public class AddAndEditSportActivity extends AppCompatActivity {
                 howManyPeopleTextView.setVisibility(View.VISIBLE);
                 aboutActivityMoney.setVisibility(View.VISIBLE);
 
-                howManyMan = gteHowManyPeople.getText() + "";
-                howManyPeopleTextView.setText("出席約:" + howManyMan + "人");
+                addAboutInfoSportDataSet.setHowManyMan("出席約:" + gteEditHowManyPeople.getText().toString()  + "人");
+                howManyPeopleTextView.setText("出席約:" + gteEditHowManyPeople.getText().toString()+ "人");
 
-                whoPay = showPayWay.getText() + "";
-                aboutActivityMoney.setText("費用方式:" + whoPay + "");
+                addAboutInfoSportDataSet.setWhoPay("費用方式:" + showPayWay.getText() + "");
+                aboutActivityMoney.setText("費用方式:" + showPayWay.getText() + "");
 
-                if (howManyMan.equals("") || whoPay.equals("")) {
+                if (gteEditHowManyPeople.getText().toString().equals("") || showPayWay.getText().equals("")) {
                     Toast.makeText(AddAndEditSportActivity.this, "欄位為空", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -125,19 +126,16 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             editEndTimebutton.setOnClickListener(view1 -> AddAndEditSportActivity.this.timePickerDialog(editEndTimebutton, "選擇結束時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
             okButton.setOnClickListener(view12 -> {
                 cardViewTextTitle.setVisibility(View.GONE);
-
-
-
                 cardViewShowStartTime.setVisibility(View.VISIBLE);
-                sportStartTime = editStartTimebutton.getText() + "";
-
                 cardViewShowEndTime.setVisibility(View.VISIBLE);
-                sportEndTime = editEndTimebutton.getText() + "";
 
-                cardViewShowStartTime.setText("開始:" + sportStartTime + "");
-                cardViewShowEndTime.setText("結束:" + sportEndTime + "");
+                addAboutInfoSportDataSet.setSportStartTime(editStartTimebutton.getText()+"");
+                addAboutInfoSportDataSet.setSportEndTime(editEndTimebutton.getText() + "");
 
-                if (sportStartTime.equals("") || sportEndTime.equals("")) {
+                cardViewShowStartTime.setText("開始:" + editStartTimebutton.getText() + "");
+                cardViewShowEndTime.setText("結束:" + editEndTimebutton.getText() + "");
+
+                if (editStartTimebutton.getText().equals("") || editEndTimebutton.getText().equals("")) {
                     Toast.makeText(AddAndEditSportActivity.this, "欄位為空", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -166,10 +164,14 @@ public class AddAndEditSportActivity extends AppCompatActivity {
 
 
         setLocationCardView.setOnClickListener(view -> {
+
+
+            addAboutInfoSportDataSet.setSportTitle(topicEditText.getText() + "");
+            addAboutInfoSportDataSet.setSportContent(sportContentedit.getText() + "");
+
             startActivity(new Intent(AddAndEditSportActivity.this
-                    , GoogleMapSystemMainActivity.class));
-            sportTitle = topicEditText.getText() + "";
-            sportContent = sportContentedit.getText() + "";
+                    , GoogleMapSystemMainActivity.class).putExtra("SportInfoData",addAboutInfoSportDataSet));
+
             finish();
 
 
@@ -178,6 +180,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         });
 
         if (GoogleMapSystemMainActivity.whenUseGoogleMapBack == 99) {
+            addAboutInfoSportDataSet = (addAboutInfoSportDataSet) getIntent().getSerializableExtra("SportInfoDataAddMap");
 
             cardCardViewInfoTitle.setVisibility(View.GONE);
             cardViewTextTitle.setVisibility(View.GONE);
@@ -190,13 +193,13 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             LocationName.setVisibility(View.VISIBLE);
 
 
-            topicEditText.setText(sportTitle);
-            sportContentedit.setText(sportContent);
-            howManyPeopleTextView.setText("出席約:" + howManyMan + "人");
-            aboutActivityMoney.setText("費用方式:" + whoPay + "");
-            cardViewShowStartTime.setText("開始:" + sportStartTime + "");
-            cardViewShowEndTime.setText("結束:" + sportEndTime + "");
-            LocationName.setText(Map);
+            topicEditText.setText(addAboutInfoSportDataSet.getSportTitle());
+            sportContentedit.setText(addAboutInfoSportDataSet.getSportContent());
+            howManyPeopleTextView.setText(addAboutInfoSportDataSet.getHowManyMan());
+            aboutActivityMoney.setText(addAboutInfoSportDataSet.getWhoPay());
+            cardViewShowStartTime.setText(addAboutInfoSportDataSet.getSportStartTime());
+            cardViewShowEndTime.setText(addAboutInfoSportDataSet.getSportEndTime());
+            LocationName.setText(addAboutInfoSportDataSet.getMap());
 
 
         }

@@ -33,11 +33,16 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
     RecyclerView suchRecyclerview;
     static int whenUseGoogleMapBack;
 
+    addAboutInfoSportDataSet addAndEditSportActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_map_system_main);
+
+
+        addAndEditSportActivity = (addAboutInfoSportDataSet) getIntent().getSerializableExtra("SportInfoData");
 
         EditText sucheditText = findViewById(R.id.editTextTextPersonName2);
         suchRecyclerview = findViewById(R.id.suchrecyclerview);
@@ -96,9 +101,9 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
             holder.textView.setText(list.get(position).getDescription().replace(",", "\n"));
 
             holder.textView.setOnClickListener(view -> {
-                AddAndEditSportActivity.Map =  list.get(position).getDescription()+"";
-                whenUseGoogleMapBack=99;
-                startActivity(new Intent(GoogleMapSystemMainActivity.this,AddAndEditSportActivity.class));
+                addAndEditSportActivity.setMap(list.get(position).getDescription() + "");
+                whenUseGoogleMapBack = 99;
+                startActivity(new Intent(GoogleMapSystemMainActivity.this, AddAndEditSportActivity.class).putExtra("SportInfoDataAddMap", addAndEditSportActivity));
                 finish();
 
             });
@@ -188,5 +193,11 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
 
     }
 
+    public void onBackPressed() {
+        addAndEditSportActivity.setMap(getString(R.string.when_Map_Info_Null));
+        whenUseGoogleMapBack = 99;
+        startActivity(new Intent(GoogleMapSystemMainActivity.this, AddAndEditSportActivity.class).putExtra("SportInfoDataAddMap", addAndEditSportActivity));
+        finish();
+    }
 
 }
