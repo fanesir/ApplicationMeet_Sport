@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +32,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
 
     Date date;
     int index = -1;
+    static String sportTitle, sportContent, howManyMan, whoPay, sportStartTime, sportEndTime, Map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,13 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_and_edit_sport);
 
 
-        EditText topiceditText = findViewById(R.id.editTextsetSportTitle);
+        EditText topicEditText = findViewById(R.id.editTextsetSportTitle);
         String sportType = SportTypeRecyclerviewActivity.SportTypedataModal.sportName;
         TextView sportNametextView = findViewById(R.id.sportNametextView);
+        TextView sportContentedit = findViewById(R.id.editTextTextPersonName);
 
         sportNametextView.setText(sportType);
-        topiceditText.setHint("冰友啊有閒來打" + sportType + "喔!");
+        topicEditText.setHint("冰友啊有閒來打" + sportType + "喔!");
 
 
         CardView setCardViewInfo = findViewById(R.id.setcardViewinfo);
@@ -53,47 +56,53 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         howManyPeopleTextView.setVisibility(View.GONE);
         aboutActivityMoney.setVisibility(View.GONE);
 
-        setCardViewInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        setCardViewInfo.setOnClickListener(view -> {
 
-                String[] setPayWay = {"各出各的", "主辦方支付", "免費"};
+            String[] setPayWay = {"各出各的", "主辦方支付", "免費"};
 
-                Dialog dialog = new Dialog(AddAndEditSportActivity.this);
-                dialog.setContentView(R.layout.show_info_layout);
-                TextView showPayWay = dialog.findViewById(R.id.textViewPayWay);
-                EditText gteHowManyPeople = dialog.findViewById(R.id.editTextNumber);
+            Dialog dialog = new Dialog(AddAndEditSportActivity.this);
+            dialog.setContentView(R.layout.show_info_layout);
+            TextView showPayWay = dialog.findViewById(R.id.textViewPayWay);
+            EditText gteHowManyPeople = dialog.findViewById(R.id.editTextNumber);
 
-                Button nextButton = dialog.findViewById(R.id.nextbutton);
-                nextButton.setOnClickListener(view13 -> {
-                    if (index < setPayWay.length - 1) {
-                        index = index + 1;
-                        showPayWay.setText(setPayWay[index]);
-                    }
-                });
+            Button nextButton = dialog.findViewById(R.id.nextbutton);
+            nextButton.setOnClickListener(view13 -> {
+                if (index < setPayWay.length - 1) {
+                    index = index + 1;
+                    showPayWay.setText(setPayWay[index]);
+                }
+            });
 
-                Button backButton = dialog.findViewById(R.id.backbutton);
-                backButton.setOnClickListener(view14 -> {
-                    if (index > 0) {
-                        index = index - 1;
-                        showPayWay.setText(setPayWay[index]);
+            Button backButton = dialog.findViewById(R.id.backbutton);
+            backButton.setOnClickListener(view14 -> {
+                if (index > 0) {
+                    index = index - 1;
+                    showPayWay.setText(setPayWay[index]);
 
-                    }
-                });
+                }
+            });
 
-                Button okButton = dialog.findViewById(R.id.okbutton);
-                okButton.setOnClickListener(view15 -> {
-                    cardCardViewInfoTitle.setVisibility(View.GONE);
-                    howManyPeopleTextView.setVisibility(View.VISIBLE);
-                    aboutActivityMoney.setVisibility(View.VISIBLE);
+            Button okButton = dialog.findViewById(R.id.okbutton);
+            okButton.setOnClickListener(view15 -> {
+                cardCardViewInfoTitle.setVisibility(View.GONE);
+                howManyPeopleTextView.setVisibility(View.VISIBLE);
+                aboutActivityMoney.setVisibility(View.VISIBLE);
 
-                    howManyPeopleTextView.setText("出席約:" + gteHowManyPeople.getText() + "人");
-                    aboutActivityMoney.setText("費用方式:" + showPayWay.getText() + "");
-                    dialog.dismiss();
-                });
+                howManyMan = gteHowManyPeople.getText() + "";
+                howManyPeopleTextView.setText("出席約:" + howManyMan + "人");
 
-                dialog.show();
-            }
+                whoPay = showPayWay.getText() + "";
+                aboutActivityMoney.setText("費用方式:" + whoPay + "");
+
+                if (howManyMan.equals("") || whoPay.equals("")) {
+                    Toast.makeText(AddAndEditSportActivity.this, "欄位為空", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                dialog.dismiss();
+            });
+
+            dialog.show();
         });
 
 
@@ -117,10 +126,21 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             okButton.setOnClickListener(view12 -> {
                 cardViewTextTitle.setVisibility(View.GONE);
 
+
+
                 cardViewShowStartTime.setVisibility(View.VISIBLE);
-                cardViewShowStartTime.setText("開始:" + editStartTimebutton.getText() + "");
+                sportStartTime = editStartTimebutton.getText() + "";
+
                 cardViewShowEndTime.setVisibility(View.VISIBLE);
-                cardViewShowEndTime.setText("結束:" + editEndTimebutton.getText() + "");
+                sportEndTime = editEndTimebutton.getText() + "";
+
+                cardViewShowStartTime.setText("開始:" + sportStartTime + "");
+                cardViewShowEndTime.setText("結束:" + sportEndTime + "");
+
+                if (sportStartTime.equals("") || sportEndTime.equals("")) {
+                    Toast.makeText(AddAndEditSportActivity.this, "欄位為空", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
 
                 dialog.dismiss();
@@ -134,14 +154,52 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         CardView setLocationCardView = findViewById(R.id.cardViewLocation);
         TextView cardViewLocationTextTitle = findViewById(R.id.cardViewLocationTitle);
         TextView LocationName = findViewById(R.id.LocationName);
-        LocationName.setVisibility(View.GONE);
 
-        setLocationCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(AddAndEditSportActivity.this,GoogleMapSystemMainActivity.class));
-            }
+        if (Map == null) {
+            LocationName.setVisibility(View.GONE);
+        } else {
+            cardViewLocationTextTitle.setVisibility(View.GONE);
+            LocationName.setVisibility(View.VISIBLE);
+            LocationName.setText(Map);
+
+        }
+
+
+        setLocationCardView.setOnClickListener(view -> {
+            startActivity(new Intent(AddAndEditSportActivity.this
+                    , GoogleMapSystemMainActivity.class));
+            sportTitle = topicEditText.getText() + "";
+            sportContent = sportContentedit.getText() + "";
+            finish();
+
+
+            // AddAndEditSportActivity.this.finish();
+
         });
+
+        if (GoogleMapSystemMainActivity.whenUseGoogleMapBack == 99) {
+
+            cardCardViewInfoTitle.setVisibility(View.GONE);
+            cardViewTextTitle.setVisibility(View.GONE);
+            cardViewLocationTextTitle.setVisibility(View.GONE);
+
+            howManyPeopleTextView.setVisibility(View.VISIBLE);
+            aboutActivityMoney.setVisibility(View.VISIBLE);
+            cardViewShowStartTime.setVisibility(View.VISIBLE);
+            cardViewShowEndTime.setVisibility(View.VISIBLE);
+            LocationName.setVisibility(View.VISIBLE);
+
+
+            topicEditText.setText(sportTitle);
+            sportContentedit.setText(sportContent);
+            howManyPeopleTextView.setText("出席約:" + howManyMan + "人");
+            aboutActivityMoney.setText("費用方式:" + whoPay + "");
+            cardViewShowStartTime.setText("開始:" + sportStartTime + "");
+            cardViewShowEndTime.setText("結束:" + sportEndTime + "");
+            LocationName.setText(Map);
+
+
+        }
 
 
     }

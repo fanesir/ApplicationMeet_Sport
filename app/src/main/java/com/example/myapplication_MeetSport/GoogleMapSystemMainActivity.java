@@ -11,6 +11,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,6 +31,8 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
     Apilnterface apilnterface;
     RelativeLayout relativeLayout;
     RecyclerView suchRecyclerview;
+    static int whenUseGoogleMapBack;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +76,7 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
     }
 
     public class RecyclerViewAdpter extends RecyclerView.Adapter<RecyclerViewAdpter.Viewholder> {
-        ArrayList<Listclass> list ;
-
+        ArrayList<Listclass> list;
 
 
         public RecyclerViewAdpter(ArrayList<Listclass> list) {
@@ -87,9 +90,18 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull Viewholder holder, int position) {
-            holder.textView.setText(list.get(position).getDescription());
+        public void onBindViewHolder(@NonNull Viewholder holder, @SuppressLint("RecyclerView") int position) {
 
+
+            holder.textView.setText(list.get(position).getDescription().replace(",", "\n"));
+
+            holder.textView.setOnClickListener(view -> {
+                AddAndEditSportActivity.Map =  list.get(position).getDescription()+"";
+                whenUseGoogleMapBack=99;
+                startActivity(new Intent(GoogleMapSystemMainActivity.this,AddAndEditSportActivity.class));
+                finish();
+
+            });
         }
 
         @Override
@@ -119,10 +131,9 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
                     suchRecyclerview.setVisibility(View.VISIBLE);
 
 
-                    RecyclerViewAdpter recyclerViewAdpter = new RecyclerViewAdpter(response.body().getPredictions());//
-                    Log.i("a",response+"");
+                    RecyclerViewAdpter recyclerViewAdpter = new RecyclerViewAdpter(response.body().getPredictions());//response.body().getPredictions()
+                    Log.i("Map_Json_Message", response + "");
                     suchRecyclerview.setAdapter(recyclerViewAdpter);
-
 
 
                 } else {
