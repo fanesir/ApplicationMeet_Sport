@@ -4,18 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
-import com.jzxiang.pickerview.listener.OnDateSetListener;
+
 
 import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,16 +24,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.cardview.widget.CardView;
 
 public class AddAndEditSportActivity extends AppCompatActivity {
 
-    addAboutInfoSportDataSet addAboutInfoSportDataSet = new addAboutInfoSportDataSet() ;
+    addAboutInfoSportDataSet addAboutInfoSportDataSet = new addAboutInfoSportDataSet();
 
     Date date;
     int index = -1;
-    static String sportTitle, sportContent, howManyMan, whoPay, sportStartTime, sportEndTime, Map;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +89,8 @@ public class AddAndEditSportActivity extends AppCompatActivity {
                 howManyPeopleTextView.setVisibility(View.VISIBLE);
                 aboutActivityMoney.setVisibility(View.VISIBLE);
 
-                addAboutInfoSportDataSet.setHowManyMan("出席約:" + gteEditHowManyPeople.getText().toString()  + "人");
-                howManyPeopleTextView.setText("出席約:" + gteEditHowManyPeople.getText().toString()+ "人");
+                addAboutInfoSportDataSet.setHowManyMan("出席約:" + gteEditHowManyPeople.getText().toString() + "人");
+                howManyPeopleTextView.setText("出席約:" + gteEditHowManyPeople.getText().toString() + "人");
 
                 addAboutInfoSportDataSet.setWhoPay("費用方式:" + showPayWay.getText() + "");
                 aboutActivityMoney.setText("費用方式:" + showPayWay.getText() + "");
@@ -129,8 +129,8 @@ public class AddAndEditSportActivity extends AppCompatActivity {
                 cardViewShowStartTime.setVisibility(View.VISIBLE);
                 cardViewShowEndTime.setVisibility(View.VISIBLE);
 
-                addAboutInfoSportDataSet.setSportStartTime(editStartTimebutton.getText()+"");
-                addAboutInfoSportDataSet.setSportEndTime(editEndTimebutton.getText() + "");
+                addAboutInfoSportDataSet.setSportStartTime("開始:" + editStartTimebutton.getText() + "");
+                addAboutInfoSportDataSet.setSportEndTime("結束:" + editEndTimebutton.getText() + "");
 
                 cardViewShowStartTime.setText("開始:" + editStartTimebutton.getText() + "");
                 cardViewShowEndTime.setText("結束:" + editEndTimebutton.getText() + "");
@@ -152,15 +152,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         CardView setLocationCardView = findViewById(R.id.cardViewLocation);
         TextView cardViewLocationTextTitle = findViewById(R.id.cardViewLocationTitle);
         TextView LocationName = findViewById(R.id.LocationName);
-
-        if (Map == null) {
-            LocationName.setVisibility(View.GONE);
-        } else {
-            cardViewLocationTextTitle.setVisibility(View.GONE);
-            LocationName.setVisibility(View.VISIBLE);
-            LocationName.setText(Map);
-
-        }
+        LocationName.setVisibility(View.GONE);
 
 
         setLocationCardView.setOnClickListener(view -> {
@@ -170,7 +162,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             addAboutInfoSportDataSet.setSportContent(sportContentedit.getText() + "");
 
             startActivity(new Intent(AddAndEditSportActivity.this
-                    , GoogleMapSystemMainActivity.class).putExtra("SportInfoData",addAboutInfoSportDataSet));
+                    , GoogleMapSystemMainActivity.class).putExtra("SportInfoData", addAboutInfoSportDataSet));
 
             finish();
 
@@ -181,6 +173,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
 
         if (GoogleMapSystemMainActivity.whenUseGoogleMapBack == 99) {
             addAboutInfoSportDataSet = (addAboutInfoSportDataSet) getIntent().getSerializableExtra("SportInfoDataAddMap");
+            Log.i("message", addAboutInfoSportDataSet.getHowManyMan() + "");
 
             cardCardViewInfoTitle.setVisibility(View.GONE);
             cardViewTextTitle.setVisibility(View.GONE);
@@ -201,6 +194,16 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             cardViewShowEndTime.setText(addAboutInfoSportDataSet.getSportEndTime());
             LocationName.setText(addAboutInfoSportDataSet.getMap());
 
+            if (addAboutInfoSportDataSet.getHowManyMan() == null | addAboutInfoSportDataSet.getWhoPay() == null) {
+                cardCardViewInfoTitle.setVisibility(View.VISIBLE);
+                howManyPeopleTextView.setVisibility(View.GONE);
+                aboutActivityMoney.setVisibility(View.GONE);
+            }
+            if (addAboutInfoSportDataSet.getSportStartTime() == null | addAboutInfoSportDataSet.getSportEndTime() == null) {
+                cardViewTextTitle.setVisibility(View.VISIBLE);
+                cardViewShowStartTime.setVisibility(View.GONE);
+                cardViewShowEndTime.setVisibility(View.GONE);
+            }
 
         }
 

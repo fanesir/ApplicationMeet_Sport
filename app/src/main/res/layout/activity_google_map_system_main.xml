@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="no data found"
+            android:text="@string/NO_choose_Any_location"
             android:textColor="#000"
             android:textSize="17sp"/>
 

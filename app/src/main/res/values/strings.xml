@@ -2,4 +2,5 @@
     <string name="app_name">My Application_Sport</string>
     <string name="api_key">AIzaSyDlczJ34RU2EdChBvrsRHWuNwTUbu8IUlI</string>
     <string name = "when_Map_Info_Null">尚未選擇地標</string>
+    <string name = "NO_choose_Any_location">冰友啊!請選取地標喔</string>
 </resources>
