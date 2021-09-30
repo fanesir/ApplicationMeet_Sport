@@ -2,20 +2,19 @@ package com.example.myapplication_MeetSport;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 
-
 import android.app.Dialog;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,16 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 import androidx.cardview.widget.CardView;
 
 public class AddAndEditSportActivity extends AppCompatActivity {
-
-    addAboutInfoSportDataSet addAboutInfoSportDataSet = new addAboutInfoSportDataSet();
-
+    static addAboutInfoSportDataSet addAboutInfoSportDataSet = new addAboutInfoSportDataSet();
     Date date;
     int index = -1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +39,50 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         EditText topicEditText = findViewById(R.id.editTextsetSportTitle);
         String sportType = SportTypeRecyclerviewActivity.SportTypedataModal.sportName;
         TextView sportNametextView = findViewById(R.id.sportNametextView);
-        TextView sportContentedit = findViewById(R.id.editTextTextPersonName);
+        EditText sportContentedit = findViewById(R.id.editTextTextPersonName);
 
         sportNametextView.setText(sportType);
         topicEditText.setHint("冰友啊有閒來打" + sportType + "喔!");
 
+        topicEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                addAboutInfoSportDataSet.setSportTitle(topicEditText.getText() + "");
+            }
+        });
+        sportContentedit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                addAboutInfoSportDataSet.setSportContent(sportContentedit.getText() + "");
+            }
+        });
 
         CardView setCardViewInfo = findViewById(R.id.setcardViewinfo);
         TextView cardCardViewInfoTitle = findViewById(R.id.cardViewinfoTitle);
         TextView howManyPeopleTextView = findViewById(R.id.cardViewinfopeople);
         TextView aboutActivityMoney = findViewById(R.id.cardViewinfopay);
+
+        Button finishToFirebase = findViewById(R.id.finshbuttontofirebase);
         howManyPeopleTextView.setVisibility(View.GONE);
         aboutActivityMoney.setVisibility(View.GONE);
 
@@ -157,23 +186,15 @@ public class AddAndEditSportActivity extends AppCompatActivity {
 
         setLocationCardView.setOnClickListener(view -> {
 
-
-            addAboutInfoSportDataSet.setSportTitle(topicEditText.getText() + "");
-            addAboutInfoSportDataSet.setSportContent(sportContentedit.getText() + "");
-
             startActivity(new Intent(AddAndEditSportActivity.this
-                    , GoogleMapSystemMainActivity.class).putExtra("SportInfoData", addAboutInfoSportDataSet));
+                    , GoogleMapSystemMainActivity.class));
 
             finish();
 
 
-            // AddAndEditSportActivity.this.finish();
-
         });
 
         if (GoogleMapSystemMainActivity.whenUseGoogleMapBack == 99) {
-            addAboutInfoSportDataSet = (addAboutInfoSportDataSet) getIntent().getSerializableExtra("SportInfoDataAddMap");
-            Log.i("message", addAboutInfoSportDataSet.getHowManyMan() + "");
 
             cardCardViewInfoTitle.setVisibility(View.GONE);
             cardViewTextTitle.setVisibility(View.GONE);
@@ -206,6 +227,13 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             }
 
         }
+        finishToFirebase.setOnClickListener(view -> {
+
+            PutData();
+
+
+
+        });
 
 
     }
@@ -252,5 +280,31 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         return sf.format(d);//.substring(0, 10)
 
     }
+
+    public void PutData() {
+
+        GoogleMapSystemMainActivity.whenUseGoogleMapBack = 0;
+
+        DatabaseReference referenceDatabase = FirebaseDatabase.getInstance().getReference().child("user_Put_Sport")
+                .child(SportTypeRecyclerviewActivity.SportTypedataModal.getSportEngName());
+        String fuzzyID = referenceDatabase.push().getKey() + "";
+
+        addAboutInfoSportDataSet.setUserEmail(LoginActivity.USER_ID + "");
+        addAboutInfoSportDataSet.setFuzzyID(fuzzyID);
+
+        if (addAboutInfoSportDataSet.getSportTitle() == null || addAboutInfoSportDataSet.getSportContent() == null || addAboutInfoSportDataSet.getHowManyMan() == null || addAboutInfoSportDataSet.getWhoPay() == null || addAboutInfoSportDataSet.getSportStartTime() == null || addAboutInfoSportDataSet.getSportEndTime() == null || addAboutInfoSportDataSet.getMap() == null) {
+            Toast.makeText(AddAndEditSportActivity.this, "有欄位空白", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        referenceDatabase.child(fuzzyID).setValue(addAboutInfoSportDataSet);
+        startActivity(new Intent(AddAndEditSportActivity.this, ThisSportTypeRecyclerviewActivity.class));
+        addAboutInfoSportDataSet = new addAboutInfoSportDataSet();
+        finish();
+
+
+
+    }
+
 
 }

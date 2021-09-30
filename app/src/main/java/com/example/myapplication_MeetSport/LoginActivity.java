@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
 
-            USER_ID = user.getEmail().substring(0, 5) + "";
+            USER_ID = user.getEmail() + "";
             Intent intent = new Intent(getApplicationContext(), SportTypeRecyclerviewActivity.class);
             startActivity(intent);
             finish();
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                USER_ID = account.getEmail().substring(0, 5) + "";
+                USER_ID = account.getEmail();
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId() + account.getEmail() + "");
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {

@@ -42,7 +42,7 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_google_map_system_main);
 
 
-        addAndEditSportActivity = (addAboutInfoSportDataSet) getIntent().getSerializableExtra("SportInfoData");
+        addAndEditSportActivity =AddAndEditSportActivity.addAboutInfoSportDataSet;
 
         EditText sucheditText = findViewById(R.id.editTextTextPersonName2);
         suchRecyclerview = findViewById(R.id.suchrecyclerview);

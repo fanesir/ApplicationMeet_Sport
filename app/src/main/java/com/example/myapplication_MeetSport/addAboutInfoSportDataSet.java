@@ -4,12 +4,28 @@ import java.io.Serializable;
 
 public class addAboutInfoSportDataSet implements Serializable {
 
-    String sportTitle, sportContent, howManyMan, whoPay, sportStartTime, sportEndTime, Map;
+    String sportTitle;
+    String sportContent;
+    String howManyMan;
+    String whoPay;
+    String sportStartTime;
+    String sportEndTime;
+    String Map;
+    String userEmail;
+    String fuzzyID;
 
-    addAboutInfoSportDataSet(){
-
+    public String getFuzzyID() {
+        return fuzzyID;
     }
 
+    public void setFuzzyID(String fuzzyID) {
+        this.fuzzyID = fuzzyID;
+    }
+
+
+    addAboutInfoSportDataSet() {
+
+    }
 
 
     public String getSportTitle() {
@@ -68,7 +84,13 @@ public class addAboutInfoSportDataSet implements Serializable {
         Map = map;
     }
 
+    public String getUserEmail() {
+        return userEmail;
+    }
 
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
 
 }

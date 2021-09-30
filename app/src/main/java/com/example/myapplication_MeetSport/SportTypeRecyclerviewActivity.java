@@ -83,6 +83,7 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             if (id == R.id.itemlogout) {
                 FirebaseAuth.getInstance().signOut();
                 SportTypeRecyclerviewActivity.this.startActivity(new Intent(SportTypeRecyclerviewActivity.this, LoginActivity.class));
+                LoginActivity.USER_ID=null;
                 finish();
             }
             return false;
@@ -112,7 +113,9 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
 
             holder.sportbackgroundImageView.setOnClickListener(view -> {
                 SportTypedataModal = model;
-                Runnable runnable = () -> startActivity(new Intent(SportTypeRecyclerviewActivity.this, ThisSportTypeRecyclerviewActivity.class));
+                Runnable runnable = () ->
+                        startActivity(new Intent(SportTypeRecyclerviewActivity.this,
+                                ThisSportTypeRecyclerviewActivity.class));
                 new Thread(runnable).start();
                 finish();
             });
