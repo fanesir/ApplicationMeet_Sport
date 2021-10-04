@@ -22,8 +22,7 @@ import com.google.firebase.database.Query;
 
 public class ThisSportTypeRecyclerviewActivity extends AppCompatActivity {
 
-
-
+   static String THIS_SPORT_INFO_FUZZY_ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +31,16 @@ public class ThisSportTypeRecyclerviewActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.this_sport_RecyclerView);
 
 
-        DatabaseReference mbase = FirebaseDatabase.getInstance().getReference("user_Put_Sport").child(SportTypeRecyclerviewActivity.SportTypedataModal.getSportEngName());
+        DatabaseReference mbase = FirebaseDatabase.getInstance().getReference("user_Put_Sport")
+                .child(SportTypeRecyclerviewActivity.SportTypedataModal.getSportEngName());
         Query query = mbase.orderByChild("sportStartTime");
 
-        FirebaseRecyclerOptions<addAboutInfoSportDataSet> options =
-                new FirebaseRecyclerOptions.Builder<addAboutInfoSportDataSet>()
-                        .setQuery(query, addAboutInfoSportDataSet.class).build();
+
+
+
+        FirebaseRecyclerOptions<AboutInfoSportDataSet> options =
+                new FirebaseRecyclerOptions.Builder<AboutInfoSportDataSet>()
+                        .setQuery(query, AboutInfoSportDataSet.class).build();
 
         adapterForDateRecyview foreMainAdpter = new adapterForDateRecyview(options);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,28 +56,38 @@ public class ThisSportTypeRecyclerviewActivity extends AppCompatActivity {
 
         });
 
+
     }
 
 
-    class adapterForDateRecyview extends FirebaseRecyclerAdapter<addAboutInfoSportDataSet,
+    class adapterForDateRecyview extends FirebaseRecyclerAdapter<AboutInfoSportDataSet,
             adapterForDateRecyview.forRecyViewUi> {
 
 
-        public adapterForDateRecyview(@NonNull FirebaseRecyclerOptions<addAboutInfoSportDataSet> options) {
+        public adapterForDateRecyview(@NonNull FirebaseRecyclerOptions<AboutInfoSportDataSet> options) {
             super(options);
         }
 
         @Override
-        protected void onBindViewHolder(@NonNull forRecyViewUi holder, int position, @NonNull addAboutInfoSportDataSet model) {
+        protected void onBindViewHolder(@NonNull forRecyViewUi holder, int position, @NonNull AboutInfoSportDataSet model) {
             holder.title.setText(model.getSportTitle() + "");
             holder.timeTitle.setText(model.getSportStartTime() + " ~ " + model.getSportEndTime() + "");
+
+            holder.title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(ThisSportTypeRecyclerviewActivity.this,
+                            sportInfoMainActivity.class).putExtra("sportMessageInfo", model));
+                    THIS_SPORT_INFO_FUZZY_ID=model.getFuzzyID();
+                }
+
+            });
         }
 
         @NonNull
         @Override
         public forRecyViewUi onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sport_rv_this_type_layout, parent, false
-            );
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sport_rv_this_type_layout, parent, false);
             return new forRecyViewUi(view);
         }
 

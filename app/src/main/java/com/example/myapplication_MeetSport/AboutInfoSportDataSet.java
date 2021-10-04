@@ -2,7 +2,7 @@ package com.example.myapplication_MeetSport;
 
 import java.io.Serializable;
 
-public class addAboutInfoSportDataSet implements Serializable {
+public class AboutInfoSportDataSet implements Serializable {
 
     String sportTitle;
     String sportContent;
@@ -13,6 +13,17 @@ public class addAboutInfoSportDataSet implements Serializable {
     String Map;
     String userEmail;
     String fuzzyID;
+    String Mapid;
+
+    public String getMapid() {
+        return Mapid;
+    }
+
+    public void setMapid(String mapid) {
+        this.Mapid = mapid;
+    }
+
+
 
     public String getFuzzyID() {
         return fuzzyID;
@@ -23,7 +34,7 @@ public class addAboutInfoSportDataSet implements Serializable {
     }
 
 
-    addAboutInfoSportDataSet() {
+    AboutInfoSportDataSet() {
 
     }
 
@@ -94,3 +105,4 @@ public class addAboutInfoSportDataSet implements Serializable {
 
 
 }
+

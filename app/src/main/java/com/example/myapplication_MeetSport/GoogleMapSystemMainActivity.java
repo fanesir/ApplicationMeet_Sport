@@ -33,16 +33,12 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
     RecyclerView suchRecyclerview;
     static int whenUseGoogleMapBack;
 
-    addAboutInfoSportDataSet addAndEditSportActivity;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_map_system_main);
 
-
-        addAndEditSportActivity =AddAndEditSportActivity.addAboutInfoSportDataSet;
 
         EditText sucheditText = findViewById(R.id.editTextTextPersonName2);
         suchRecyclerview = findViewById(R.id.suchrecyclerview);
@@ -101,9 +97,18 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
             holder.textView.setText(list.get(position).getDescription().replace(",", "\n"));
 
             holder.textView.setOnClickListener(view -> {
-                addAndEditSportActivity.setMap(list.get(position).getDescription() + "");
-                whenUseGoogleMapBack = 99;
-                startActivity(new Intent(GoogleMapSystemMainActivity.this, AddAndEditSportActivity.class).putExtra("SportInfoDataAddMap", addAndEditSportActivity));
+
+                if (sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER == 98) {
+                    DataBasedirector.aboutInfoSportDataSet.setMap(list.get(position).getDescription() + "");
+                    DataBasedirector.aboutInfoSportDataSet.setMapid(list.get(position).getPlace_id() + "");
+                } else {
+                    AddAndEditSportActivity.AboutInfoSportDataSet.setMap(list.get(position).getDescription() + "");
+                    AddAndEditSportActivity.AboutInfoSportDataSet.setMapid(list.get(position).getPlace_id() + "");
+                    whenUseGoogleMapBack = 99;
+                }
+
+
+                startActivity(new Intent(GoogleMapSystemMainActivity.this, AddAndEditSportActivity.class));
                 finish();
 
             });
@@ -181,6 +186,7 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
 
     public class Listclass {
         private String description;
+        private String place_id;
 
         public String getDescription() {
             return description;
@@ -190,13 +196,20 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
             this.description = description;
         }
 
+        public String getPlace_id() {
+            return place_id;
+        }
+
+        public void setPlace_id(String place_id) {
+            this.place_id = place_id;
+        }
 
     }
 
     public void onBackPressed() {
-        addAndEditSportActivity.setMap(getString(R.string.when_Map_Info_Null));
+        AddAndEditSportActivity.AboutInfoSportDataSet.setMap(getString(R.string.when_Map_Info_Null));
         whenUseGoogleMapBack = 99;
-        startActivity(new Intent(GoogleMapSystemMainActivity.this, AddAndEditSportActivity.class).putExtra("SportInfoDataAddMap", addAndEditSportActivity));
+        startActivity(new Intent(GoogleMapSystemMainActivity.this, AddAndEditSportActivity.class));
         finish();
     }
 

@@ -43,6 +43,7 @@ import java.util.Date;
 public class SportTypeRecyclerviewActivity extends AppCompatActivity {
 
     static DataModal SportTypedataModal;
+    static String SportEngName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             if (id == R.id.itemlogout) {
                 FirebaseAuth.getInstance().signOut();
                 SportTypeRecyclerviewActivity.this.startActivity(new Intent(SportTypeRecyclerviewActivity.this, LoginActivity.class));
-                LoginActivity.USER_ID=null;
+                LoginActivity.USER_ID = null;
                 finish();
             }
             return false;
@@ -91,11 +92,11 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
         authority();
         Date date = new Date();
         try {
-            date =new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
+            date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Log.i("DATE", String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1 ));
+        Log.i("DATE", String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1));
     }
 //
 
@@ -110,13 +111,16 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             holder.sportName.setText(model.getSportName());
             holder.sportEngName.setText(model.getSportEngName());
             Picasso.get().load(model.sportBackImage).into(holder.sportbackgroundImageView);
+            SportEngName = model.sportEngName;
 
             holder.sportbackgroundImageView.setOnClickListener(view -> {
+
                 SportTypedataModal = model;
                 Runnable runnable = () ->
                         startActivity(new Intent(SportTypeRecyclerviewActivity.this,
                                 ThisSportTypeRecyclerviewActivity.class));
                 new Thread(runnable).start();
+
                 finish();
             });
 

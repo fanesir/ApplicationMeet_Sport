@@ -190,16 +190,16 @@
                 android:id="@+id/LocationName"
                 android:layout_width="371dp"
                 android:layout_height="49dp"
+                android:lines="3"
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                android:lines="3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.157"
+                app:layout_constraintHorizontal_bias="0.238"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.571" />
+                app:layout_constraintVertical_bias="0.545" />
 
             <TextView
                 android:id="@+id/cardViewLocationTitle"
