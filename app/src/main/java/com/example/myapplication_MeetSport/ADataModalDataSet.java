@@ -2,12 +2,12 @@ package com.example.myapplication_MeetSport;
 
 import java.io.Serializable;
 
-public class DataModal implements Serializable {
+public class ADataModalDataSet implements Serializable {
     String sportName;
     String sportBackImage;
     String sportEngName;
 
-    DataModal() {
+    ADataModalDataSet() {
 
     }
 

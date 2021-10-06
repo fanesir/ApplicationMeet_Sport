@@ -30,9 +30,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -41,8 +44,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class SportTypeRecyclerviewActivity extends AppCompatActivity {
-
-    static DataModal SportTypedataModal;
+    AboutAccountUsetDataset aboutAccountUsetDataset;
+    static ADataModalDataSet sportTypedataModalDataSetA;
     static String SportEngName;
 
     @Override
@@ -50,14 +53,15 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport_type);
 
+        IFThisUserDontHaveData();
+
+
         RecyclerView recyclerView = findViewById(R.id.sportTypeRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         DatabaseReference mbase = FirebaseDatabase.getInstance().getReference("Sport_Type");
-        Query query = mbase.orderByChild("sportName");
-
-        FirebaseRecyclerOptions<DataModal> options = new FirebaseRecyclerOptions.Builder<DataModal>()
-                .setQuery(query, DataModal.class)
+        FirebaseRecyclerOptions<ADataModalDataSet> options = new FirebaseRecyclerOptions.Builder<ADataModalDataSet>()
+                .setQuery(mbase, ADataModalDataSet.class)
                 .build();
 
         AdapterForMaimActivity foreMainAdpter = new AdapterForMaimActivity(options);
@@ -84,30 +88,48 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             if (id == R.id.itemlogout) {
                 FirebaseAuth.getInstance().signOut();
                 SportTypeRecyclerviewActivity.this.startActivity(new Intent(SportTypeRecyclerviewActivity.this, LoginActivity.class));
-                LoginActivity.USER_ID = null;
+                LoginActivity.USER_EMAIL = null;
                 finish();
             }
             return false;
         });
         authority();
-        Date date = new Date();
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_YEAR)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Log.i("DATE", String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1));
+
+    }
+
+    private void IFThisUserDontHaveData() {
+        DatabaseReference mbase2 = FirebaseDatabase.getInstance().getReference("user_Account_Data")
+                .child("UserEmail").child(LoginActivity.USER_EMAIL.replace(".", ""));
+        mbase2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                try {
+                    aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
+                    Log.i("asd", LoginActivity.USER_EMAIL.replace(".", ""));
+                } catch (NullPointerException e) {
+                    startActivity(new Intent(SportTypeRecyclerviewActivity.this, UserAccountEditDataActivity.class));
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 //
 
     public class AdapterForMaimActivity extends FirebaseRecyclerAdapter
-            <DataModal, AdapterForMaimActivity.sportTypeRecyclerViewViewholder> {
+            <ADataModalDataSet, AdapterForMaimActivity.sportTypeRecyclerViewViewholder> {
 
         public AdapterForMaimActivity(@NonNull FirebaseRecyclerOptions options) {
             super(options);
         }
 
-        protected void onBindViewHolder(@NonNull sportTypeRecyclerViewViewholder holder, int position, @NonNull DataModal model) {
+        protected void onBindViewHolder(@NonNull sportTypeRecyclerViewViewholder holder, int position, @NonNull ADataModalDataSet model) {
             holder.sportName.setText(model.getSportName());
             holder.sportEngName.setText(model.getSportEngName());
             Picasso.get().load(model.sportBackImage).into(holder.sportbackgroundImageView);
@@ -115,7 +137,7 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
 
             holder.sportbackgroundImageView.setOnClickListener(view -> {
 
-                SportTypedataModal = model;
+                sportTypedataModalDataSetA = model;
                 Runnable runnable = () ->
                         startActivity(new Intent(SportTypeRecyclerviewActivity.this,
                                 ThisSportTypeRecyclerviewActivity.class));
@@ -157,5 +179,6 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }

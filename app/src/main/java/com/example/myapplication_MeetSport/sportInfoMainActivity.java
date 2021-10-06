@@ -7,9 +7,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,18 +31,17 @@ public class sportInfoMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sport_info_main);
 
         DatabaseReference mbase2 = FirebaseDatabase.getInstance().getReference("user_Put_Sport")
-                .child(SportTypeRecyclerviewActivity.SportTypedataModal.getSportEngName()).child(ThisSportTypeRecyclerviewActivity.THIS_SPORT_INFO_FUZZY_ID);
+                .child(SportTypeRecyclerviewActivity.sportTypedataModalDataSetA.getSportEngName()).child(ThisSportTypeRecyclerviewActivity.THIS_SPORT_INFO_FUZZY_ID);
 
 
-        Query query2 = mbase2.orderByChild("sportStartTime");
-        query2.addListenerForSingleValueEvent(new ValueEventListener() {
+        mbase2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 aboutInfoSportDataSet = snapshot.getValue(AboutInfoSportDataSet.class);
                 ImageView edit_ImageView = findViewById(R.id.imageView3);
                 edit_ImageView.setVisibility(View.GONE);
 
-                if (aboutInfoSportDataSet.getUserEmail().equals(LoginActivity.USER_ID)) {
+                if (aboutInfoSportDataSet.getUserEmail().equals(LoginActivity.USER_EMAIL)) {
                     edit_ImageView.setVisibility(View.VISIBLE);
                 }
 
@@ -65,11 +65,34 @@ public class sportInfoMainActivity extends AppCompatActivity {
                 });
 
                 edit_ImageView.setOnClickListener(view -> {
-                    DataBasedirector.aboutInfoSportDataSet = aboutInfoSportDataSet;
-                    SPORT_ACTIVITY_INFO_NUMBER = 98;
-                    THIS_SPORT_INFO_ID = aboutInfoSportDataSet.getFuzzyID();
-                    startActivity(new Intent(sportInfoMainActivity.this, AddAndEditSportActivity.class));
-                    finish();
+                    PopupMenu popup = new PopupMenu(edit_ImageView.getContext(), view);
+                    popup.getMenuInflater().inflate(R.menu.edit_menu, popup.getMenu());
+                    popup.show();
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.item1:
+                                    DataBasedirector.aboutInfoSportDataSet = aboutInfoSportDataSet;
+                                    SPORT_ACTIVITY_INFO_NUMBER = 98;
+                                    THIS_SPORT_INFO_ID = aboutInfoSportDataSet.getFuzzyID();
+                                    startActivity(new Intent(sportInfoMainActivity.this, AddAndEditSportActivity.class));
+                                    finish();
+                                    return true;
+
+                                case R.id.item2:
+                                    mbase2.removeValue();
+                                    startActivity(new Intent(sportInfoMainActivity.this, ThisSportTypeRecyclerviewActivity.class));
+                                    finish();
+                                    return true;
+
+                            }
+
+
+                            return false;
+                        }
+                    });
+
                 });
 
 
@@ -80,8 +103,6 @@ public class sportInfoMainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }

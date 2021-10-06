@@ -20,6 +20,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -27,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 9001;
-    static String USER_ID;
+    static String USER_EMAIL;
 
     @Override
     protected void onStart() {
@@ -35,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
 
-            USER_ID = user.getEmail() + "";
+            USER_EMAIL = user.getEmail() + "";
             Intent intent = new Intent(getApplicationContext(), SportTypeRecyclerviewActivity.class);
             startActivity(intent);
             finish();
@@ -67,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                USER_ID = account.getEmail();
+                USER_EMAIL = account.getEmail();
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId() + account.getEmail() + "");
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
@@ -90,8 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            Intent intent = new Intent(getApplicationContext(), SportTypeRecyclerviewActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(LoginActivity.this, SportTypeRecyclerviewActivity.class));
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.

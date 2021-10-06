@@ -32,7 +32,7 @@ public class ThisSportTypeRecyclerviewActivity extends AppCompatActivity {
 
 
         DatabaseReference mbase = FirebaseDatabase.getInstance().getReference("user_Put_Sport")
-                .child(SportTypeRecyclerviewActivity.SportTypedataModal.getSportEngName());
+                .child(SportTypeRecyclerviewActivity.sportTypedataModalDataSetA.getSportEngName());
         Query query = mbase.orderByChild("sportStartTime");
 
 

@@ -37,7 +37,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
 
 
         EditText topicEditText = findViewById(R.id.editTextsetSportTitle);
-        String sportType = SportTypeRecyclerviewActivity.SportTypedataModal.sportName;
+        String sportType = SportTypeRecyclerviewActivity.sportTypedataModalDataSetA.sportName;
         TextView sportNameTextView = findViewById(R.id.sportNametextView);
         EditText sportContentEdit = findViewById(R.id.editTextTextPersonName);
 
@@ -202,7 +202,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         }
 
 //資料來自運動資訊編輯
-        if (sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER == 98) {
+        if (sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER == 98) {//image
 
             TextView[] cardViewtextViews = {cardCardViewInfoTitle, cardViewTextTitle, cardViewLocationTextTitle};
             TextView[] cardViewCOntent = {howManyPeopleTextView, aboutActivityMoney, cardViewShowStartTime, cardViewShowEndTime, LocationName};
@@ -241,7 +241,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         finishToFirebase.setOnClickListener(view -> {
             if (sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER == 98) {
                 String[] FirebaseIndex = {"sportTitle", "sportContent", "howManyMan", "whoPay"
-                        , "sportStartTime", "sportEndTime", "map", "mapid"};
+                        , "sportStartTime", "sportEndTime", "map", "mapid"};//image
                 String[] ForFirebaseData = {
                         DataBasedirector.aboutInfoSportDataSet.getSportTitle(),
                         DataBasedirector.aboutInfoSportDataSet.getSportContent(),
@@ -392,10 +392,10 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         GoogleMapSystemMainActivity.whenUseGoogleMapBack = 0;
 
         DatabaseReference referenceDatabase = FirebaseDatabase.getInstance().getReference().child("user_Put_Sport")
-                .child(SportTypeRecyclerviewActivity.SportTypedataModal.getSportEngName());
+                .child(SportTypeRecyclerviewActivity.sportTypedataModalDataSetA.getSportEngName());
         String fuzzyID = referenceDatabase.push().getKey() + "";
 
-        AboutInfoSportDataSet.setUserEmail(LoginActivity.USER_ID + "");
+        AboutInfoSportDataSet.setUserEmail(LoginActivity.USER_EMAIL + "");
         AboutInfoSportDataSet.setFuzzyID(fuzzyID);
         referenceDatabase.child(fuzzyID).setValue(AboutInfoSportDataSet);
 
@@ -418,7 +418,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
     void PutEditFireBaseData(String[] FirebaseIndex, String[] ForFirebaseData) {
 
         DatabaseReference referenceDatabase = FirebaseDatabase.getInstance().getReference().child("user_Put_Sport")
-                .child(SportTypeRecyclerviewActivity.SportTypedataModal.getSportEngName()).child(sportInfoMainActivity.THIS_SPORT_INFO_ID);
+                .child(SportTypeRecyclerviewActivity.sportTypedataModalDataSetA.getSportEngName()).child(sportInfoMainActivity.THIS_SPORT_INFO_ID);
 
         for (int i = 0; i < FirebaseIndex.length; i++) {
             referenceDatabase.child(FirebaseIndex[i]).setValue(ForFirebaseData[i]);
