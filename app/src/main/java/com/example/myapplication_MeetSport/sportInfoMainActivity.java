@@ -17,7 +17,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class sportInfoMainActivity extends AppCompatActivity {
@@ -52,7 +51,7 @@ public class sportInfoMainActivity extends AppCompatActivity {
                 TextView sportlocation_Textview = findViewById(R.id.sport_info_location);
                 TextView sportmoney_Textview = findViewById(R.id.sport_info_money);
 
-                userEmail.setText(aboutInfoSportDataSet.getUserEmail());
+                userEmail.setText(aboutInfoSportDataSet.getUserHostName() + getText(R.string.USER_host));
                 sportTopic_Textview.setText(aboutInfoSportDataSet.getSportTitle());
                 sportTime_Textview.setText(aboutInfoSportDataSet.getSportStartTime() + "\n" + aboutInfoSportDataSet.getSportEndTime());
                 sportContent_Textview.setText(aboutInfoSportDataSet.getSportContent());
@@ -73,7 +72,7 @@ public class sportInfoMainActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             switch (menuItem.getItemId()) {
                                 case R.id.item1:
-                                    DataBasedirector.aboutInfoSportDataSet = aboutInfoSportDataSet;
+                                    ALLDataBasedirector.aboutInfoSportDataSet = aboutInfoSportDataSet;
                                     SPORT_ACTIVITY_INFO_NUMBER = 98;
                                     THIS_SPORT_INFO_ID = aboutInfoSportDataSet.getFuzzyID();
                                     startActivity(new Intent(sportInfoMainActivity.this, AddAndEditSportActivity.class));
@@ -104,6 +103,15 @@ public class sportInfoMainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+
+    public void onBackPressed() {
+
+
+        startActivity(new Intent(sportInfoMainActivity.this, ThisSportTypeRecyclerviewActivity.class));
+        finish();
 
     }
 }

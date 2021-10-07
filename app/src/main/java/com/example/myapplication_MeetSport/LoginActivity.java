@@ -28,11 +28,12 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity {
+    AboutAccountUsetDataset aboutAccountUsetDataset;
     private static final String TAG = "GoogleActivity";
     GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private static final int RC_SIGN_IN = 9001;
-    static String USER_EMAIL;
+    static String USER_EMAIL, USER_ID_NAME;
 
     @Override
     protected void onStart() {
@@ -95,8 +96,9 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            startActivity(new Intent(LoginActivity.this, SportTypeRecyclerviewActivity.class));
-                            finish();
+
+                            IFThisUserDontHaveData();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -121,4 +123,35 @@ public class LoginActivity extends AppCompatActivity {
     public void googlesigin(View v) {
         signIn();
     }
+
+    private void IFThisUserDontHaveData() {
+        DatabaseReference mbase2 = FirebaseDatabase.getInstance().getReference("user_Account_Data")
+                .child(LoginActivity.USER_EMAIL.replace(".", ""));
+        mbase2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                try {
+                    aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
+                    Log.i("USERINFO", aboutAccountUsetDataset.getUserIDName() + "");//設定使用者的暱稱
+                    startActivity(new Intent(LoginActivity.this, SportTypeRecyclerviewActivity.class));
+                    USER_ID_NAME = aboutAccountUsetDataset.getUserIDName();
+                    finish();
+                } catch (NullPointerException e) {
+                    startActivity(new Intent(LoginActivity.this, UserAccountEditDataActivity.class));
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
+
 }

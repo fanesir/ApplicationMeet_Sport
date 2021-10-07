@@ -123,7 +123,12 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             Button editEndTimebutton = dialog.findViewById(R.id.editEndTimebutton);
             Button okButton = dialog.findViewById(R.id.okbutton);
 
-            editStartTimebutton.setOnClickListener(view1 -> AddAndEditSportActivity.this.timePickerDialog(editStartTimebutton, "選擇開始時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
+            editStartTimebutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view1) {
+                    AddAndEditSportActivity.this.timePickerDialog(editStartTimebutton, "選擇開始時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day");
+                }
+            });
             editEndTimebutton.setOnClickListener(view1 -> AddAndEditSportActivity.this.timePickerDialog(editEndTimebutton, "選擇結束時間").show(AddAndEditSportActivity.this.getSupportFragmentManager(), "year_month_day"));
             okButton.setOnClickListener(view12 -> {
                 cardViewTextTitle.setVisibility(View.GONE);
@@ -214,25 +219,25 @@ public class AddAndEditSportActivity extends AppCompatActivity {
                 v.setVisibility(View.VISIBLE);
             }
 
-            topicEditText.setText(DataBasedirector.aboutInfoSportDataSet.getSportTitle() + "");
+            topicEditText.setText(ALLDataBasedirector.aboutInfoSportDataSet.getSportTitle() + "");
             EdtiRealTimeChangeDataa(topicEditText, 1);
 
-            sportContentEdit.setText(DataBasedirector.aboutInfoSportDataSet.getSportContent());
+            sportContentEdit.setText(ALLDataBasedirector.aboutInfoSportDataSet.getSportContent());
             EdtiRealTimeChangeDataa(sportContentEdit, 2);
 
-            howManyPeopleTextView.setText(DataBasedirector.aboutInfoSportDataSet.getHowManyMan());
+            howManyPeopleTextView.setText(ALLDataBasedirector.aboutInfoSportDataSet.getHowManyMan());
             realEditTextviewInfo(howManyPeopleTextView, 3);
 
-            aboutActivityMoney.setText(DataBasedirector.aboutInfoSportDataSet.getWhoPay());
+            aboutActivityMoney.setText(ALLDataBasedirector.aboutInfoSportDataSet.getWhoPay());
             realEditTextviewInfo(aboutActivityMoney, 4);
 
-            cardViewShowStartTime.setText(DataBasedirector.aboutInfoSportDataSet.getSportStartTime());
+            cardViewShowStartTime.setText(ALLDataBasedirector.aboutInfoSportDataSet.getSportStartTime());
             realEditTextviewInfo(cardViewShowStartTime, 5);
 
-            cardViewShowEndTime.setText(DataBasedirector.aboutInfoSportDataSet.getSportEndTime());
+            cardViewShowEndTime.setText(ALLDataBasedirector.aboutInfoSportDataSet.getSportEndTime());
             realEditTextviewInfo(cardViewShowEndTime, 6);
 
-            LocationName.setText(DataBasedirector.aboutInfoSportDataSet.getMap());
+            LocationName.setText(ALLDataBasedirector.aboutInfoSportDataSet.getMap());
             realEditTextviewInfo(LocationName, 7);
 
         }
@@ -243,18 +248,19 @@ public class AddAndEditSportActivity extends AppCompatActivity {
                 String[] FirebaseIndex = {"sportTitle", "sportContent", "howManyMan", "whoPay"
                         , "sportStartTime", "sportEndTime", "map", "mapid"};//image
                 String[] ForFirebaseData = {
-                        DataBasedirector.aboutInfoSportDataSet.getSportTitle(),
-                        DataBasedirector.aboutInfoSportDataSet.getSportContent(),
-                        DataBasedirector.aboutInfoSportDataSet.getHowManyMan(),
-                        DataBasedirector.aboutInfoSportDataSet.getWhoPay(),
-                        DataBasedirector.aboutInfoSportDataSet.getSportStartTime(),
-                        DataBasedirector.aboutInfoSportDataSet.getSportEndTime(),
-                        DataBasedirector.aboutInfoSportDataSet.getMap(),
-                        DataBasedirector.aboutInfoSportDataSet.getMapid()
+                        ALLDataBasedirector.aboutInfoSportDataSet.getSportTitle(),
+                        ALLDataBasedirector.aboutInfoSportDataSet.getSportContent(),
+                        ALLDataBasedirector.aboutInfoSportDataSet.getHowManyMan(),
+                        ALLDataBasedirector.aboutInfoSportDataSet.getWhoPay(),
+                        ALLDataBasedirector.aboutInfoSportDataSet.getSportStartTime(),
+                        ALLDataBasedirector.aboutInfoSportDataSet.getSportEndTime(),
+                        ALLDataBasedirector.aboutInfoSportDataSet.getMap(),
+                        ALLDataBasedirector.aboutInfoSportDataSet.getMapid()
                 };
 
                 PutEditFireBaseData(FirebaseIndex, ForFirebaseData);
                 startActivity(new Intent(AddAndEditSportActivity.this, sportInfoMainActivity.class));
+                sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER = 0;
                 finish();
 
             } else if (GoogleMapSystemMainActivity.whenUseGoogleMapBack == 99) {
@@ -308,10 +314,10 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (i == 1) {
-                    DataBasedirector.aboutInfoSportDataSet.setSportTitle(getEditText.getText() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setSportTitle(getEditText.getText() + "");
 
                 } else if (i == 2) {
-                    DataBasedirector.aboutInfoSportDataSet.setSportContent(getEditText.getText() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setSportContent(getEditText.getText() + "");
 
                 }
 
@@ -334,15 +340,15 @@ public class AddAndEditSportActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (i == 3) {
-                    DataBasedirector.aboutInfoSportDataSet.setHowManyMan(textView.getText() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setHowManyMan(textView.getText() + "");
                 } else if (i == 4) {
-                    DataBasedirector.aboutInfoSportDataSet.setWhoPay(textView.getText() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setWhoPay(textView.getText() + "");
                 } else if (i == 5) {
-                    DataBasedirector.aboutInfoSportDataSet.setSportStartTime(textView.getText() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setSportStartTime(textView.getText() + "");
                 } else if (i == 6) {
-                    DataBasedirector.aboutInfoSportDataSet.setSportEndTime(textView.getText() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setSportEndTime(textView.getText() + "");
                 } else if (i == 7) {
-                    DataBasedirector.aboutInfoSportDataSet.setMap(textView.getText() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setMap(textView.getText() + "");
                 }
             }
         });
@@ -396,6 +402,7 @@ public class AddAndEditSportActivity extends AppCompatActivity {
         String fuzzyID = referenceDatabase.push().getKey() + "";
 
         AboutInfoSportDataSet.setUserEmail(LoginActivity.USER_EMAIL + "");
+        AboutInfoSportDataSet.setUserHostName(SportTypeRecyclerviewActivity.UserNAME);
         AboutInfoSportDataSet.setFuzzyID(fuzzyID);
         referenceDatabase.child(fuzzyID).setValue(AboutInfoSportDataSet);
 
@@ -428,7 +435,17 @@ public class AddAndEditSportActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        startActivity(new Intent(AddAndEditSportActivity.this, ThisSportTypeRecyclerviewActivity.class));
+
+        if (GoogleMapSystemMainActivity.whenUseGoogleMapBack == 99) {
+            GoogleMapSystemMainActivity.whenUseGoogleMapBack = 0;
+            AboutInfoSportDataSet = new AboutInfoSportDataSet();
+            startActivity(new Intent(AddAndEditSportActivity.this, ThisSportTypeRecyclerviewActivity.class));
+        }else if (sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER == 98 ){
+            sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER = 0;
+            AboutInfoSportDataSet = new AboutInfoSportDataSet();
+            startActivity(new Intent(AddAndEditSportActivity.this, sportInfoMainActivity.class));
+        }
+
         finish();
 
     }

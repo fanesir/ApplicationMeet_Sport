@@ -4,16 +4,13 @@ import java.io.Serializable;
 
 public class AboutInfoSportDataSet implements Serializable {
 
-    String sportTitle;
-    String sportContent;
-    String howManyMan;
-    String whoPay;
-    String sportStartTime;
-    String sportEndTime;
-    String Map;
-    String userEmail;
-    String fuzzyID;
-    String Mapid;
+
+
+    String sportTitle, sportContent, howManyMan, whoPay, sportStartTime, sportEndTime, Map, userEmail, fuzzyID, Mapid, UserHostName;
+
+    AboutInfoSportDataSet() {
+
+    }
 
     public String getMapid() {
         return Mapid;
@@ -22,7 +19,6 @@ public class AboutInfoSportDataSet implements Serializable {
     public void setMapid(String mapid) {
         this.Mapid = mapid;
     }
-
 
 
     public String getFuzzyID() {
@@ -34,10 +30,13 @@ public class AboutInfoSportDataSet implements Serializable {
     }
 
 
-    AboutInfoSportDataSet() {
-
+    public String getUserHostName() {
+        return UserHostName;
     }
 
+    public void setUserHostName(String userHostName) {
+        UserHostName = userHostName;
+    }
 
     public String getSportTitle() {
         return sportTitle;

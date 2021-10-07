@@ -108,7 +108,7 @@ public class ThisSportTypeRecyclerviewActivity extends AppCompatActivity {
 
     public void onBackPressed() {
         startActivity(new Intent(ThisSportTypeRecyclerviewActivity.this, SportTypeRecyclerviewActivity.class));
-        ThisSportTypeRecyclerviewActivity.this.finish();
+        finish();
 
     }
 }

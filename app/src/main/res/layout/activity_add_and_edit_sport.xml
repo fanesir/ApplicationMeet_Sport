@@ -8,255 +8,256 @@
     tools:context=".AddAndEditSportActivity">
 
 
-
-    <TextView
-        android:id="@+id/sportNametextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:text="TextView"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="16dp"
-        android:text="替這次的運動聚會命名吧"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sportNametextView" />
-
-    <EditText
-        android:id="@+id/editTextsetSportTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="30sp"
-        android:ems="10"
-        android:hint="123"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-
-    <androidx.cardview.widget.CardView
-
-        android:id="@+id/setcardViewinfo"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="60sp"
-        android:layout_marginHorizontal="10sp"
-        android:layout_marginBottom="10sp"
-        android:scrollbars="vertical"
-        app:cardBackgroundColor="#F4F0F0"
-        app:cardCornerRadius="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardViewforSetTime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/cardViewinfoTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="活動資訊!"
-                android:textColor="@color/teal_700"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/cardViewinfopeople"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:layout_marginTop="4sp"
-                android:textColor="@color/black"
-                android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/cardViewinfopay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:layout_marginBottom="4sp"
-                android:text="TextView"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-
-        android:id="@+id/cardViewforSetTime"
-        android:layout_width="match_parent"
-        android:layout_height="60sp"
-        android:layout_marginHorizontal="10sp"
-        android:layout_marginBottom="10sp"
-        android:scrollbars="vertical"
-        app:cardBackgroundColor="#F4F0F0"
-        app:cardCornerRadius="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardViewLocation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/timestarttextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:layout_marginTop="4sp"
-                android:textColor="@color/black"
-                android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/timeendtextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16sp"
-                android:layout_marginBottom="4sp"
-                android:text="TextView"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/cardViewTimeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="約個時間吧!"
-                android:textColor="@color/teal_700"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-
-        android:id="@+id/cardViewLocation"
-        android:layout_width="match_parent"
-        android:layout_height="60sp"
-        android:layout_marginHorizontal="10sp"
-        android:layout_marginBottom="10sp"
-        android:scrollbars="vertical"
-        app:cardBackgroundColor="#F4F0F0"
-        app:cardCornerRadius="10sp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/LocationName"
-                android:layout_width="371dp"
-                android:layout_height="49dp"
-                android:lines="3"
+                android:id="@+id/sportNametextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:gravity="center"
                 android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.238"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.545" />
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextsetSportTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="30sp"
+                android:ems="10"
+                android:hint="123666"
+                android:inputType="textPersonName" />
 
             <TextView
-                android:id="@+id/cardViewLocationTitle"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="地點是在?"
-                android:textColor="@color/teal_700"
-                android:textSize="20sp"
+                android:layout_marginStart="33dp"
+                android:layout_marginTop="12dp"
+                android:text="活動描述" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="300sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:background="@null"
+                android:backgroundTint="@color/black"
+                android:ems="10"
+                android:gravity="top|left"
+                android:hint="輸入記事"
+                android:inputType="textMultiLine" />
+
+            <androidx.cardview.widget.CardView
+
+                android:id="@+id/setcardViewinfo"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+
+                android:layout_marginHorizontal="10sp"
+                android:layout_marginBottom="10sp"
+                android:scrollbars="vertical"
+                app:cardBackgroundColor="#F4F0F0"
+                app:cardCornerRadius="10sp"
+                tools:ignore="MissingConstraints">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/cardViewinfoTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="活動資訊!"
+                        android:textColor="@color/teal_700"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/cardViewinfopeople"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16sp"
+                        android:layout_marginTop="4sp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/cardViewinfopay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16sp"
+                        android:layout_marginBottom="4sp"
+                        android:text="TextView"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+
+                android:id="@+id/cardViewforSetTime"
+                android:layout_width="match_parent"
+
+                android:layout_height="60sp"
+                android:layout_marginHorizontal="10sp"
+                android:layout_marginBottom="10sp"
+                android:scrollbars="vertical"
+                app:cardBackgroundColor="#F4F0F0"
+                app:cardCornerRadius="10sp"
+                app:layout_constraintBottom_toTopOf="@+id/cardViewLocation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/timestarttextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16sp"
+                        android:layout_marginTop="4sp"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/timeendtextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16sp"
+                        android:layout_marginBottom="4sp"
+                        android:text="TextView"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/cardViewTimeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="約個時間吧!"
+                        android:textColor="@color/teal_700"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+
+                android:id="@+id/cardViewLocation"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:layout_marginHorizontal="10sp"
+                android:layout_marginBottom="10sp"
+                android:scrollbars="vertical"
+                app:cardBackgroundColor="#F4F0F0"
+                app:cardCornerRadius="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:ignore="MissingConstraints">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/LocationName"
+                        android:layout_width="371dp"
+                        android:layout_height="49dp"
+                        android:lines="3"
+                        android:text="TextView"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.238"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.545" />
+
+                    <TextView
+                        android:id="@+id/cardViewLocationTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="地點是在?"
+                        android:textColor="@color/teal_700"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="12dp"
-        android:text="活動描述"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextsetSportTitle" />
+        </LinearLayout>
+    </ScrollView>
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:background="@null"
-        android:backgroundTint="@color/black"
-        android:ems="10"
-        android:gravity="top|left"
-        android:hint="輸入記事"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+
+
 
     <Button
         android:id="@+id/finshbuttontofirebase"
         android:layout_width="62dp"
         android:layout_height="40dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="@color/white"
 
         android:text="ok"
         android:textColor="@color/purple_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,4 +3,19 @@
     <string name="api_key">AIzaSyDlczJ34RU2EdChBvrsRHWuNwTUbu8IUlI</string>
     <string name="when_Map_Info_Null">尚未選擇地標</string>
     <string name="NO_choose_Any_location">冰友啊!請選取地標喔</string>
+    <string name="USER_Want_Name">你的暱稱</string>>
+    <string name="USER_Info_Name">我的的暱稱</string>>
+    <string name="USER_Gender">性別</string>>
+    <string name="USER_Birthday">生日</string>>
+    <string name="USER_Job">工作</string>>
+    <string name="PUT_THE_FIREBASE">確認</string>>
+    <string name="USER_Content">擅長的運動項目</string>>
+    <string name="USER_ContentInfo">我擅長</string>>
+    <string name="USER_note_hint">冰友們我曾經是羽球校隊喔，但現在是標準的上班族XD!</string>>
+    <string name="USER_boy">男生</string>>
+    <string name="USER_girl">女生</string>>
+    <string name="USER_Edit_sucess">更改成功!</string>>
+    <string name="USER_Age">歲</string>>
+    <string name="USER_host">主辦喔!</string>>
+
 </resources>

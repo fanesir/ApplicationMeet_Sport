@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,35 +25,26 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class SportTypeRecyclerviewActivity extends AppCompatActivity {
-    AboutAccountUsetDataset aboutAccountUsetDataset;
+
     static ADataModalDataSet sportTypedataModalDataSetA;
-    static String SportEngName;
+    static String SportEngName, UserNAME;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport_type);
-
-        IFThisUserDontHaveData();
-
 
         RecyclerView recyclerView = findViewById(R.id.sportTypeRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,52 +65,11 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             drawer.openDrawer(GravityCompat.START);
         });
 
-
-        NavigationView NavigationViewsporttype = findViewById(R.id.NavigationViewsporttype);
-        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
-
-        Menu menu = NavigationViewsporttype.getMenu();
-        MenuItem nav_camara = menu.findItem(R.id.useremail);
-        nav_camara.setTitle(googleSignInAccount.getEmail() + "");
-
-        NavigationViewsporttype.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.itemlogout) {
-                FirebaseAuth.getInstance().signOut();
-                SportTypeRecyclerviewActivity.this.startActivity(new Intent(SportTypeRecyclerviewActivity.this, LoginActivity.class));
-                LoginActivity.USER_EMAIL = null;
-                finish();
-            }
-            return false;
-        });
+        ShowMenuData();
         authority();
 
     }
 
-    private void IFThisUserDontHaveData() {
-        DatabaseReference mbase2 = FirebaseDatabase.getInstance().getReference("user_Account_Data")
-                .child("UserEmail").child(LoginActivity.USER_EMAIL.replace(".", ""));
-        mbase2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                try {
-                    aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
-                    Log.i("asd", LoginActivity.USER_EMAIL.replace(".", ""));
-                } catch (NullPointerException e) {
-                    startActivity(new Intent(SportTypeRecyclerviewActivity.this, UserAccountEditDataActivity.class));
-                    finish();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-//
 
     public class AdapterForMaimActivity extends FirebaseRecyclerAdapter
             <ADataModalDataSet, AdapterForMaimActivity.sportTypeRecyclerViewViewholder> {
@@ -180,5 +129,50 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
         }
     }
 
+    private void ShowMenuData() {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user_Account_Data")
+                .child(LoginActivity.USER_EMAIL.replace(".", ""));
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                AboutAccountUsetDataset aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
+                NavigationView NavigationViewsporttype = findViewById(R.id.NavigationViewsporttype);
+
+                Menu menu = NavigationViewsporttype.getMenu();
+                MenuItem useridName = menu.findItem(R.id.useremail);
+                try {
+                    useridName.setTitle("HI " + aboutAccountUsetDataset.getUserIDName() + "");
+                    UserNAME = aboutAccountUsetDataset.getUserIDName();
+                } catch (NullPointerException nullPointerException) {
+                    startActivity(new Intent(SportTypeRecyclerviewActivity.this, UserAccountEditDataActivity.class));
+                }
+
+
+                NavigationViewsporttype.setNavigationItemSelectedListener(item -> {
+                    int id = item.getItemId();
+                    if (id == R.id.useremail) {
+                        startActivity(new Intent(SportTypeRecyclerviewActivity.this, UserAccountInfo.class));
+                        finish();
+                    }
+                    if (id == R.id.itemlogout) {
+                        FirebaseAuth.getInstance().signOut();
+                        SportTypeRecyclerviewActivity.this.startActivity(new Intent(SportTypeRecyclerviewActivity.this, LoginActivity.class));
+                        LoginActivity.USER_EMAIL = null;
+                        finish();
+                    }
+                    return false;
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
 }

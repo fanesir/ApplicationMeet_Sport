@@ -99,8 +99,8 @@ public class GoogleMapSystemMainActivity extends AppCompatActivity {
             holder.textView.setOnClickListener(view -> {
 
                 if (sportInfoMainActivity.SPORT_ACTIVITY_INFO_NUMBER == 98) {
-                    DataBasedirector.aboutInfoSportDataSet.setMap(list.get(position).getDescription() + "");
-                    DataBasedirector.aboutInfoSportDataSet.setMapid(list.get(position).getPlace_id() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setMap(list.get(position).getDescription() + "");
+                    ALLDataBasedirector.aboutInfoSportDataSet.setMapid(list.get(position).getPlace_id() + "");
                 } else {
                     AddAndEditSportActivity.AboutInfoSportDataSet.setMap(list.get(position).getDescription() + "");
                     AddAndEditSportActivity.AboutInfoSportDataSet.setMapid(list.get(position).getPlace_id() + "");
