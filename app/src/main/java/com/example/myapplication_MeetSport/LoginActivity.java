@@ -133,11 +133,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
+                    USER_ID_NAME = aboutAccountUsetDataset.getUserIDName();
                     Log.i("USERINFO", aboutAccountUsetDataset.getUserIDName() + "");//設定使用者的暱稱
                     startActivity(new Intent(LoginActivity.this, SportTypeRecyclerviewActivity.class));
-                    USER_ID_NAME = aboutAccountUsetDataset.getUserIDName();
+
                     finish();
                 } catch (NullPointerException e) {
+                    ALLDataBasedirector.USER_WANT_NEW_EDIT = 21;
                     startActivity(new Intent(LoginActivity.this, UserAccountEditDataActivity.class));
                     finish();
                 }
@@ -151,7 +153,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

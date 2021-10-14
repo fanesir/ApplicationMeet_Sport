@@ -3,8 +3,11 @@ package com.example.myapplication_MeetSport;
 import java.io.Serializable;
 
 public class AboutAccountUsetDataset implements Serializable {
-    String userIDName, userEmail, userPerson, userJob, userAccountUid, userContent, userBirthday, userAge;
+    String userIDName, userEmail, userPerson, userJob, userAccountUid, userContent, userBirthday, userAge, userImage;
 
+    AboutAccountUsetDataset() {
+
+    }
 
     public String getUserBirthday() {
         return userBirthday;
@@ -21,6 +24,7 @@ public class AboutAccountUsetDataset implements Serializable {
     public void setUserAge(String userAge) {
         this.userAge = userAge;
     }
+
 
 
     public String getUserIDName() {
@@ -71,9 +75,14 @@ public class AboutAccountUsetDataset implements Serializable {
         this.userContent = userContent;
     }
 
-    AboutAccountUsetDataset() {
-
+    public String getUserImage() {
+        return userImage;
     }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
 
 
 }

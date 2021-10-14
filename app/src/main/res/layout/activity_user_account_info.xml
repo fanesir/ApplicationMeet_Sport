@@ -18,7 +18,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/userInfoImageView"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:src="@drawable/ic_baseline_emoji_people_24"
@@ -40,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/userInfoImageView" />
 
         <TextView
             android:id="@+id/textViewUserGender"

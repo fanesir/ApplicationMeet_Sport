@@ -145,7 +145,9 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
                 try {
                     useridName.setTitle("HI " + aboutAccountUsetDataset.getUserIDName() + "");
                     UserNAME = aboutAccountUsetDataset.getUserIDName();
+
                 } catch (NullPointerException nullPointerException) {
+                    ALLDataBasedirector.USER_WANT_NEW_EDIT = 21;
                     startActivity(new Intent(SportTypeRecyclerviewActivity.this, UserAccountEditDataActivity.class));
                 }
 
