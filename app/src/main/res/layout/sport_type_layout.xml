@@ -55,6 +55,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sportname" />
 
+        <ProgressBar
+            android:id="@+id/progressBar231"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:outlineSpotShadowColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/sportbackgroundImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sportbackgroundImageView" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

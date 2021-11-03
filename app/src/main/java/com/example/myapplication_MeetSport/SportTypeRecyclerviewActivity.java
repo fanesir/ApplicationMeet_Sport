@@ -12,15 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -33,6 +38,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class SportTypeRecyclerviewActivity extends AppCompatActivity {
@@ -65,6 +71,7 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             drawer.openDrawer(GravityCompat.START);
         });
 
+
         ShowMenuData();
         authority();
 
@@ -81,17 +88,27 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
         protected void onBindViewHolder(@NonNull sportTypeRecyclerViewViewholder holder, int position, @NonNull ADataModalDataSet model) {
             holder.sportName.setText(model.getSportName());
             holder.sportEngName.setText(model.getSportEngName());
-            Picasso.get().load(model.sportBackImage).into(holder.sportbackgroundImageView);
+
+
             SportEngName = model.sportEngName;
 
+            Picasso.get().load(model.sportBackImage).into(holder.sportbackgroundImageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    holder.progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+            });
+
+
             holder.sportbackgroundImageView.setOnClickListener(view -> {
-
                 sportTypedataModalDataSetA = model;
-                Runnable runnable = () ->
-                        startActivity(new Intent(SportTypeRecyclerviewActivity.this,
-                                ThisSportTypeRecyclerviewActivity.class));
-                new Thread(runnable).start();
-
+                startActivity(new Intent(SportTypeRecyclerviewActivity.this,
+                        ThisSportTypeRecyclerviewActivity.class));
                 finish();
             });
 
@@ -106,12 +123,14 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
         class sportTypeRecyclerViewViewholder extends RecyclerView.ViewHolder {
             TextView sportName, sportEngName;
             ImageView sportbackgroundImageView;
+            ProgressBar progressBar;
 
             public sportTypeRecyclerViewViewholder(@NonNull View itemView) {
                 super(itemView);
                 sportName = itemView.findViewById(R.id.sportname);
                 sportbackgroundImageView = itemView.findViewById(R.id.sportbackgroundImageView);
                 sportEngName = itemView.findViewById(R.id.sportengname);
+                progressBar = itemView.findViewById(R.id.progressBar231);
             }
         }
     }
@@ -138,15 +157,18 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 AboutAccountUsetDataset aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
+
                 NavigationView NavigationViewsporttype = findViewById(R.id.NavigationViewsporttype);
 
                 Menu menu = NavigationViewsporttype.getMenu();
                 MenuItem useridName = menu.findItem(R.id.useremail);
+
+
                 try {
                     useridName.setTitle("HI " + aboutAccountUsetDataset.getUserIDName() + "");
                     UserNAME = aboutAccountUsetDataset.getUserIDName();
 
-                } catch (NullPointerException nullPointerException) {
+                } catch (NullPointerException nullPointerException) {//新增
                     ALLDataBasedirector.USER_WANT_NEW_EDIT = 21;
                     startActivity(new Intent(SportTypeRecyclerviewActivity.this, UserAccountEditDataActivity.class));
                 }

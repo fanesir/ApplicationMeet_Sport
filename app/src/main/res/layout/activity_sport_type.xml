@@ -39,7 +39,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sportTypeRV"
-            android:layout_width="401dp"
+            android:layout_width="401sp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,8 +58,10 @@
 
 
         android:fitsSystemWindows="true"
+        app:menu="@menu/drawer_nav_layout"
+        >
+    <!--        app:headerLayout="@layout/nav_header_layout_layout"-->
 
-        app:menu="@menu/drawer_nav_layout">
 
 
     </com.google.android.material.navigation.NavigationView>

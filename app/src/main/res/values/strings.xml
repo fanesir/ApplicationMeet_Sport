@@ -17,5 +17,7 @@
     <string name="USER_Edit_sucess">更改成功!</string>>
     <string name="USER_Age">歲</string>>
     <string name="USER_host">主辦喔!</string>>
+    <string name="USER_DONT_BACK">按下確認鍵再離開喔</string>>
+
 
 </resources>

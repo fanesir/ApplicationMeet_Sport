@@ -43,13 +43,21 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints">
 
+                    <ProgressBar
+                        android:id="@+id/serInfoEditImageViewProgressBar"
+                        style="?android:attr/progressBarStyleInverse"
+                        android:layout_gravity="center"
+                        android:indeterminateTint="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
                     <ImageView
                         android:id="@+id/userInfoEditImageView"
                         android:layout_width="match_parent"
                         android:layout_height="190sp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/ic_baseline_emoji_people_24">
+                        android:src="@drawable/common_google_signin_btn_icon_light_normal_background">
 
 
                     </ImageView>
@@ -68,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="好"
+
                 android:inputType="textPersonName" />
 
             <TextView
@@ -97,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="好"
+
                 android:inputType="textPersonName" />
 
             <TextView
@@ -112,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="1997-5-26"
+
                 />
 
             <TextView
@@ -127,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="好"
+
                 />
             <TextView
                 android:id="@+id/textView15"
@@ -141,7 +149,6 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:gravity="top|left"
-                android:text="好"
                 android:hint="@string/USER_note_hint"
                 android:inputType="textMultiLine" />
 

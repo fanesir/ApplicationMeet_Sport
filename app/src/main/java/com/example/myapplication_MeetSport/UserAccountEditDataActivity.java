@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -38,6 +40,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -55,7 +58,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_account_edit_data);
-        StorageReference referenceStorage = FirebaseStorage.getInstance().getReference().child(LoginActivity.USER_EMAIL);
+        StorageReference referenceStorage = FirebaseStorage.getInstance().getReference().child("UserImageIcon").child(LoginActivity.USER_EMAIL);
 
 
         EditText EditTextUserWantName = findViewById(R.id.editTextUserWantName);
@@ -66,8 +69,8 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
         EditText EditTextUserBirthday = findViewById(R.id.editTextUserBirthday);
         Button okButton = findViewById(R.id.button2);
         EditimageView = findViewById(R.id.userInfoEditImageView);
-        ProgressBar mProgressBar = findViewById(R.id.progressBar);
-
+        ProgressBar mProgressBar = findViewById(R.id.serInfoEditImageViewProgressBar);
+        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 
         EditTextUsertEmail.setText(LoginActivity.USER_EMAIL);
         EditTextUsertEmail.setEnabled(false);
@@ -94,7 +97,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
-                    Picasso.get().load(aboutAccountUsetDataset.getUserImage()).into(EditimageView);
+
 
                     EditTextUserWantName.setText(aboutAccountUsetDataset.getUserIDName());
                     EditTextUsertPerson.setText(aboutAccountUsetDataset.getUserPerson());
@@ -103,6 +106,19 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
                     EditTextUserBirthday.setText(aboutAccountUsetDataset.getUserBirthday());
                     userid = aboutAccountUsetDataset.getUserAccountUid();
                     userImage = aboutAccountUsetDataset.getUserImage();
+
+
+                    Picasso.get().load(aboutAccountUsetDataset.getUserImage()).into(EditimageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            mProgressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+
+                        }
+                    });
 
                 }
 
@@ -178,7 +194,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
                                     PutData(mbase2, aboutAccountUsetDataset, UserAccountInfo.class);
 
                                 } else if (ALLDataBasedirector.USER_WANT_NEW_EDIT == 21) {//新增用
-                                    aboutAccountUsetDataset.setUserAccountUid(userid);
+
                                     aboutAccountUsetDataset.setUserAccountUid(mbase2.push().getKey());
 
                                     PutData(mbase2, aboutAccountUsetDataset, SportTypeRecyclerviewActivity.class);
@@ -200,6 +216,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
                 aboutAccountUsetDataset.setUserImage(userImage);
                 mbase2.setValue(aboutAccountUsetDataset);
                 startActivity(new Intent(UserAccountEditDataActivity.this, UserAccountInfo.class));
+                finish();
             }
 
 
@@ -246,7 +263,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
     }
 
     public String getDateToString(long time) {//顯示的時間
-        Log.i("a", time + "");
+
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         Date d = new Date(time);
         return sf.format(d);
@@ -270,8 +287,8 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        startActivity(new Intent(UserAccountEditDataActivity.this, UserAccountInfo.class));
-        finish();
+        Toast.makeText(UserAccountEditDataActivity.this, R.string.USER_DONT_BACK, Toast.LENGTH_LONG).show();//USER_DONT_BACK
+
     }
 
 }

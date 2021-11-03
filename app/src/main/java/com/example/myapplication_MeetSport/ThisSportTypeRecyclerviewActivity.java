@@ -79,6 +79,7 @@ public class ThisSportTypeRecyclerviewActivity extends AppCompatActivity {
                     startActivity(new Intent(ThisSportTypeRecyclerviewActivity.this,
                             sportInfoMainActivity.class).putExtra("sportMessageInfo", model));
                     THIS_SPORT_INFO_FUZZY_ID=model.getFuzzyID();
+                    finish();
                 }
 
             });
