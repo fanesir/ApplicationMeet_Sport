@@ -1,63 +1,46 @@
 package com.example.myapplication_MeetSport;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Handler;
-import android.view.View;
-import android.webkit.MimeTypeMap;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.InputType;
-import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
+import androidx.appcompat.app.AppCompatActivity;
 
 import static android.util.Log.i;
 
-public class UserAccountEditDataActivity extends AppCompatActivity {
-    Date date;
-    AboutAccountUsetDataset aboutAccountUsetDataset;
-    String userid, userImage;
-    Uri uri = null;
-    ImageView EditimageView;
 
-    @Override
+public class AddNewAccount extends AppCompatActivity {
+    AboutAccountUsetDataset aboutAccountUsetDataset;
+    ImageView EditimageView;
+    Uri uri = null;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_account_edit_data);
+
         StorageReference referenceStorage = FirebaseStorage.getInstance().getReference().child("UserImageIcon").child(LoginActivity.USER_EMAIL);
 
 
@@ -76,60 +59,6 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
         EditTextUsertEmail.setEnabled(false);
         EditTextUsertPerson.setInputType(InputType.TYPE_NULL);
         EditTextUserBirthday.setInputType(InputType.TYPE_NULL);
-
-        EditimageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.OFF).setAspectRatio(1, 1).setMinCropResultSize(129, 129)
-                        .setRequestedSize(600, 600)//最後幹上去mageview的圖片畫素
-                        .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)
-                        .start(UserAccountEditDataActivity.this);
-            }
-        });
-
-
-            EditTextUsertPerson.setEnabled(false);
-            EditTextUserBirthday.setEnabled(false);
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user_Account_Data")
-                    .child(LoginActivity.USER_EMAIL.replace(".", ""));
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
-
-
-                    EditTextUserWantName.setText(aboutAccountUsetDataset.getUserIDName());
-                    EditTextUsertPerson.setText(aboutAccountUsetDataset.getUserPerson());
-                    EditTextUsertJob.setText(aboutAccountUsetDataset.getUserJob());
-                    EditTextUserContent.setText(aboutAccountUsetDataset.getUserContent());
-                    EditTextUserBirthday.setText(aboutAccountUsetDataset.getUserBirthday());
-                    userid = aboutAccountUsetDataset.getUserAccountUid();
-                    userImage = aboutAccountUsetDataset.getUserImage();
-
-
-                    Picasso.get().load(aboutAccountUsetDataset.getUserImage()).into(EditimageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            mProgressBar.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
-
 
         EditTextUsertPerson.setOnClickListener(view -> {
             PopupMenu popup = new PopupMenu(EditTextUsertPerson.getContext(), view);
@@ -155,13 +84,12 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
 
         EditTextUserBirthday.setOnClickListener(view -> timePickerDialog(EditTextUserBirthday, "選擇生日").show(getSupportFragmentManager(), "year_month_day"));
 
-//完成
         okButton.setOnClickListener(view -> {
 
             if (EditTextUserWantName.getText().toString().matches("") || EditTextUsertEmail.getText().toString().matches("")
                     || EditTextUsertPerson.getText().toString().matches("") || EditTextUsertJob.getText().toString().matches("")
                     || EditTextUserContent.getText().toString().matches("") || EditTextUserBirthday.getText().toString().matches("")) {
-                Toast.makeText(UserAccountEditDataActivity.this, "有欄位空白", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddNewAccount.this, "有欄位空白", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -189,11 +117,8 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
                             result.addOnSuccessListener(uri -> {
                                 String imageUrll = uri.toString();
                                 aboutAccountUsetDataset.setUserImage(imageUrll);
-
-
-                                    PutData(mbase2, aboutAccountUsetDataset, UserAccountInfo.class);
-
-
+                                aboutAccountUsetDataset.setUserAccountUid(mbase2.push().getKey());
+                                PutData(mbase2, aboutAccountUsetDataset, SportTypeRecyclerviewActivity.class);
 
                             });
 
@@ -205,37 +130,11 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
                         });
 
 
-            } else if (uri == null ) {
-
-                aboutAccountUsetDataset.setUserImage(userImage);
-                mbase2.setValue(aboutAccountUsetDataset);
-                startActivity(new Intent(UserAccountEditDataActivity.this, UserAccountInfo.class));
-                finish();
             }
 
 
         });
-
     }
-
-    public void PutData(DatabaseReference databaseReference, AboutAccountUsetDataset aboutAccountUsetDataset, Class intentClass) {
-
-        databaseReference.setValue(aboutAccountUsetDataset);
-        ALLDataBasedirector.USER_WANT_NEW_EDIT = 0;
-        startActivity(new Intent(UserAccountEditDataActivity.this, intentClass));
-        finish();
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-        if (resultCode == RESULT_OK) {
-            uri = result.getUri();
-            Picasso.get().load(uri).into(EditimageView);
-        }
-    }
-
 
     TimePickerDialog timePickerDialog(EditText editText, String Message) {
         TimePickerDialog timePickerDialog = new TimePickerDialog.Builder()
@@ -251,7 +150,6 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
         return timePickerDialog;
     }
 
-
     Long getLongTime(long millseconds) {
         return millseconds;
     }
@@ -264,14 +162,11 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
 
     }
 
-    Date setDataWanttheTime(String setTime) {
-        try {
-            date = new SimpleDateFormat("yyyy-MM-dd ").parse(setTime);//setTime 可以設置2021-09-23 00:00:00
+    public void PutData(DatabaseReference databaseReference, AboutAccountUsetDataset aboutAccountUsetDataset, Class intentClass) {
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
+        databaseReference.setValue(aboutAccountUsetDataset);
+        startActivity(new Intent(AddNewAccount.this, intentClass));
+        finish();
     }
 
     private String getFileExtension(Uri uri) {
@@ -281,8 +176,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        Toast.makeText(UserAccountEditDataActivity.this, R.string.USER_DONT_BACK, Toast.LENGTH_LONG).show();//USER_DONT_BACK
+        finish();
 
     }
-
 }

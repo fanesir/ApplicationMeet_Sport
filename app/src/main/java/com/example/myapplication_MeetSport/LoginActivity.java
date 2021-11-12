@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                 .child(LoginActivity.USER_EMAIL.replace(".", ""));
         mbase2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {//即時
 
                 try {
                     aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 } catch (NullPointerException e) {
                     ALLDataBasedirector.USER_WANT_NEW_EDIT = 21;
-                    startActivity(new Intent(LoginActivity.this, UserAccountEditDataActivity.class));
+                    startActivity(new Intent(LoginActivity.this, AddNewAccount.class));
                     finish();
                 }
 

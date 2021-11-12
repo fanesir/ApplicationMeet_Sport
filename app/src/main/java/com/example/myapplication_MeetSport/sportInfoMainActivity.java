@@ -2,6 +2,7 @@ package com.example.myapplication_MeetSport;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -24,7 +25,7 @@ public class sportInfoMainActivity extends AppCompatActivity {
     static int SPORT_ACTIVITY_INFO_NUMBER = 0;
     static String THIS_SPORT_INFO_ID;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport_info_main);
@@ -39,6 +40,8 @@ public class sportInfoMainActivity extends AppCompatActivity {
                 aboutInfoSportDataSet = snapshot.getValue(AboutInfoSportDataSet.class);
                 ImageView edit_ImageView = findViewById(R.id.imageView3);
                 edit_ImageView.setVisibility(View.GONE);
+
+                RecyclerView recyclerView = findViewById(R.id.sport_account_inforecyclerView);
 
                 if (aboutInfoSportDataSet.getUserEmail().equals(LoginActivity.USER_EMAIL)) {
                     edit_ImageView.setVisibility(View.VISIBLE);
