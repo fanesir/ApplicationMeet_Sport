@@ -106,6 +106,7 @@ public class AddNewAccount extends AppCompatActivity {
             DatabaseReference mbase2 = FirebaseDatabase.getInstance().getReference("user_Account_Data")
                     .child(LoginActivity.USER_EMAIL.replace(".", ""));
 
+
             if (uri != null) {
                 StorageReference storageReference = referenceStorage.child(System.currentTimeMillis() + "." + getFileExtension(uri));//幹上去
                 storageReference.putFile(uri)

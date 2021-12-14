@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +25,7 @@ public class sportInfoMainActivity extends AppCompatActivity {
     AboutInfoSportDataSet aboutInfoSportDataSet;
     static int SPORT_ACTIVITY_INFO_NUMBER = 0;
     static String THIS_SPORT_INFO_ID;
-
+    Log log;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,18 +35,22 @@ public class sportInfoMainActivity extends AppCompatActivity {
                 .child(SportTypeRecyclerviewActivity.sportTypedataModalDataSetA.getSportEngName()).child(ThisSportTypeRecyclerviewActivity.THIS_SPORT_INFO_FUZZY_ID);
 
 
-        mbase2.addListenerForSingleValueEvent(new ValueEventListener() {
+        mbase2.addListenerForSingleValueEvent(new ValueEventListener() {//從firebase球類運動資訊出來的
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 aboutInfoSportDataSet = snapshot.getValue(AboutInfoSportDataSet.class);
+
                 ImageView edit_ImageView = findViewById(R.id.imageView3);
                 edit_ImageView.setVisibility(View.GONE);
 
-                RecyclerView recyclerView = findViewById(R.id.sport_account_inforecyclerView);
-
+                log.i("Show Email",aboutInfoSportDataSet.getUserEmail()+""+" "+LoginActivity.USER_EMAIL+"");
                 if (aboutInfoSportDataSet.getUserEmail().equals(LoginActivity.USER_EMAIL)) {
                     edit_ImageView.setVisibility(View.VISIBLE);
                 }
+
+                RecyclerView recyclerView = findViewById(R.id.sport_account_inforecyclerView);
+
+
 
                 TextView userEmail = findViewById(R.id.email_textView);
                 TextView sportTopic_Textview = findViewById(R.id.sport_info_topic);
