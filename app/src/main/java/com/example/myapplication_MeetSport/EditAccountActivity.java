@@ -16,14 +16,11 @@ import android.widget.PopupMenu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 
@@ -47,7 +43,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import static android.util.Log.i;
 
-public class UserAccountEditDataActivity extends AppCompatActivity {
+public class EditAccountActivity extends AppCompatActivity {
     Date date;
     AboutAccountUsetDataset aboutAccountUsetDataset;
     String userid, userImage;
@@ -67,6 +63,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
         EditText EditTextUsertJob = findViewById(R.id.editTextUserJOB);
         EditText EditTextUserContent = findViewById(R.id.editTextUserContent);
         EditText EditTextUserBirthday = findViewById(R.id.editTextUserBirthday);
+
         Button okButton = findViewById(R.id.button2);
         EditimageView = findViewById(R.id.userInfoEditImageView);
         ProgressBar mProgressBar = findViewById(R.id.serInfoEditImageViewProgressBar);
@@ -84,7 +81,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
                         .setGuidelines(CropImageView.Guidelines.OFF).setAspectRatio(1, 1).setMinCropResultSize(129, 129)
                         .setRequestedSize(600, 600)//最後幹上去mageview的圖片畫素
                         .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)
-                        .start(UserAccountEditDataActivity.this);
+                        .start(EditAccountActivity.this);
             }
         });
 
@@ -96,30 +93,35 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
+
+                    try {
+                        aboutAccountUsetDataset = snapshot.getValue(AboutAccountUsetDataset.class);
 
 
-                    EditTextUserWantName.setText(aboutAccountUsetDataset.getUserIDName());
-                    EditTextUsertPerson.setText(aboutAccountUsetDataset.getUserPerson());
-                    EditTextUsertJob.setText(aboutAccountUsetDataset.getUserJob());
-                    EditTextUserContent.setText(aboutAccountUsetDataset.getUserContent());
-                    EditTextUserBirthday.setText(aboutAccountUsetDataset.getUserBirthday());
-                    userid = aboutAccountUsetDataset.getUserAccountUid();
-                    userImage = aboutAccountUsetDataset.getUserImage();
+                        EditTextUserWantName.setText(aboutAccountUsetDataset.getUserIDName());
+                        EditTextUsertPerson.setText(aboutAccountUsetDataset.getUserPerson());
+                        EditTextUsertJob.setText(aboutAccountUsetDataset.getUserJob());
+                        EditTextUserContent.setText(aboutAccountUsetDataset.getUserContent());
+                        EditTextUserBirthday.setText(aboutAccountUsetDataset.getUserBirthday());
+                        userid = aboutAccountUsetDataset.getUserAccountUid();
+                        userImage = aboutAccountUsetDataset.getUserImage();
 
 
-                    Picasso.get().load(aboutAccountUsetDataset.getUserImage()).into(EditimageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            mProgressBar.setVisibility(View.GONE);
-                        }
+                        Picasso.get().load(aboutAccountUsetDataset.getUserImage()).into(EditimageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                mProgressBar.setVisibility(View.GONE);
 
-                        @Override
-                        public void onError(Exception e) {
+                            }
 
-                        }
-                    });
+                            @Override
+                            public void onError(Exception e) {
 
+                            }
+                        });
+                    }catch (NullPointerException e ){
+
+                    }
                 }
 
                 @Override
@@ -161,7 +163,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
             if (EditTextUserWantName.getText().toString().matches("") || EditTextUsertEmail.getText().toString().matches("")
                     || EditTextUsertPerson.getText().toString().matches("") || EditTextUsertJob.getText().toString().matches("")
                     || EditTextUserContent.getText().toString().matches("") || EditTextUserBirthday.getText().toString().matches("")) {
-                Toast.makeText(UserAccountEditDataActivity.this, "有欄位空白", Toast.LENGTH_LONG).show();
+                Toast.makeText(EditAccountActivity.this, "有欄位空白", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -209,7 +211,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
 
                 aboutAccountUsetDataset.setUserImage(userImage);
                 mbase2.setValue(aboutAccountUsetDataset);
-                startActivity(new Intent(UserAccountEditDataActivity.this, UserAccountInfo.class));
+                startActivity(new Intent(EditAccountActivity.this, UserAccountInfo.class));
                 finish();
             }
 
@@ -222,7 +224,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
 
         databaseReference.setValue(aboutAccountUsetDataset);
         ALLDataBasedirector.USER_WANT_NEW_EDIT = 0;
-        startActivity(new Intent(UserAccountEditDataActivity.this, intentClass));
+        startActivity(new Intent(EditAccountActivity.this, intentClass));
         finish();
     }
 
@@ -281,7 +283,7 @@ public class UserAccountEditDataActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
-        Toast.makeText(UserAccountEditDataActivity.this, R.string.USER_DONT_BACK, Toast.LENGTH_LONG).show();//USER_DONT_BACK
+        Toast.makeText(EditAccountActivity.this, R.string.USER_DONT_BACK, Toast.LENGTH_LONG).show();//USER_DONT_BACK
 
     }
 

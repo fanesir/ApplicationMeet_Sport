@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))//
                 .requestEmail()
                 .build();
 
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
+
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 USER_EMAIL = account.getEmail();
@@ -136,11 +138,11 @@ public class LoginActivity extends AppCompatActivity {
                     USER_ID_NAME = aboutAccountUsetDataset.getUserIDName();
                     Log.i("USERINFO", aboutAccountUsetDataset.getUserIDName() + "");//設定使用者的暱稱
                     startActivity(new Intent(LoginActivity.this, SportTypeRecyclerviewActivity.class));
-
                     finish();
                 } catch (NullPointerException e) {
-                    ALLDataBasedirector.USER_WANT_NEW_EDIT = 21;
+
                     startActivity(new Intent(LoginActivity.this, AddNewAccount.class));
+                    //Toast.makeText(LoginActivity.this,"123",Toast.LENGTH_LONG).show();
                     finish();
                 }
 

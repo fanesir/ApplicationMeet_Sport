@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "333239563607",
+    "firebase_url": "https://meet-sport-data-base-default-rtdb.firebaseio.com",
     "project_id": "meet-sport-data-base",
     "storage_bucket": "meet-sport-data-base.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "333239563607-asggcta87tq48cje4k6ufjhpoggqu9bi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication_MeetSport",
+            "certificate_hash": "0a551c383551383470adb184967f80654be2fd8a"
+          }
+        },
+        {
+          "client_id": "333239563607-hhbrv3cma47j11gtod9s7jodnjs9kfhj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication_MeetSport",
+            "certificate_hash": "54e63ab9777f340755eec9a021a7c7238dc81baf"
+          }
+        },
         {
           "client_id": "333239563607-choaguaes3ljuhgljj0ssjlm3me10ibl.apps.googleusercontent.com",
           "client_type": 3

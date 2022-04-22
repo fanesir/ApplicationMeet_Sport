@@ -12,27 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -170,7 +166,8 @@ public class SportTypeRecyclerviewActivity extends AppCompatActivity {
 
                 } catch (NullPointerException nullPointerException) {//新增
                     ALLDataBasedirector.USER_WANT_NEW_EDIT = 21;
-                    startActivity(new Intent(SportTypeRecyclerviewActivity.this, UserAccountEditDataActivity.class));
+                    startActivity(new Intent(SportTypeRecyclerviewActivity.this, AddNewAccount.class));
+
                 }
 
 
